@@ -202,15 +202,14 @@ export default function App() {
             <button 
               id="brand-logo-btn"
               onClick={() => setActiveSection("home")}
-              className="flex items-center gap-2.5 text-left focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg p-1"
+              className="flex items-center gap-2.5 text-left focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-lg p-1 group"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-600 via-teal-700 to-blue-900 flex items-center justify-center text-white font-black text-lg shadow-md">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-teal-600 via-teal-700 to-blue-900 flex items-center justify-center text-white font-black text-lg shadow-md shrink-0 group-hover:scale-105 transition-transform">
                 G
               </div>
-              <div>
-                <h1 className="font-extrabold text-base md:text-lg leading-none text-blue-950 tracking-tight">Global Hope <span className="text-teal-600">For All</span></h1>
-                <span className="text-[10px] text-teal-700 font-semibold tracking-wide uppercase">Wellness & Anxiety Education</span>
-              </div>
+              <h1 className="font-black text-sm sm:text-base md:text-lg text-blue-950 tracking-tight uppercase font-sans">
+                GLOBAL HOPE FOR ALL
+              </h1>
             </button>
 
             {/* Desktop Navigation Links (Responsive Menu) */}
@@ -361,57 +360,57 @@ export default function App() {
               <div className="space-y-16">
                 
                 {/* Hero Section */}
-                <section id="hero-section" className="relative py-20 lg:py-28">
-                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <section id="hero-section" className="relative py-12 sm:py-20 lg:py-28">
+                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                     
                     {/* Hero copy */}
-                    <div className="lg:col-span-7 space-y-6 text-left">
-                      <div className="inline-flex items-center gap-1.5 bg-teal-100/80 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-teal-800 border border-white/60 uppercase tracking-widest">
+                    <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-left">
+                      <div className="inline-flex items-center gap-1.5 bg-teal-100/80 backdrop-blur-sm px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-teal-800 border border-white/60 uppercase tracking-widest">
                         <Sparkles className="w-3.5 h-3.5 text-teal-600" />
                         <span>Evidence-Based Mental Wellness</span>
                       </div>
-                      <h2 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-blue-950 leading-[1.1] tracking-tight">
+                      <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-blue-950 leading-[1.1] tracking-tight">
                         Global Hope <br/>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-700">For All</span>
                       </h2>
-                      <p className="text-lg text-slate-600 leading-relaxed max-w-xl font-light">
+                      <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl font-light">
                         Supporting Mental Wellness, Anxiety Education, Panic Recovery Resources, and Healthy Intimacy Through Trusted Information.
                       </p>
                       
                       {/* Call-to-action Buttons Grid */}
-                      <div className="flex flex-wrap gap-4 pt-4">
+                      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 pt-2">
                         <button
                           id="hero-cta-appointment"
                           onClick={() => setActiveSection("appointment-booking")}
-                          className="px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-bold shadow-xl shadow-teal-600/20 transition duration-150 cursor-pointer"
+                          className="w-full sm:w-auto px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl font-bold shadow-xl shadow-teal-600/20 transition duration-150 cursor-pointer text-center"
                         >
                           Book an Appointment
                         </button>
                         <button
                           id="hero-cta-register"
                           onClick={() => setActiveSection("patient-registration")}
-                          className="px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-blue-900 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer"
+                          className="w-full sm:w-auto px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-blue-900 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer text-center"
                         >
                           Register as a Patient
                         </button>
                         <button
                           id="hero-cta-anxiety"
                           onClick={() => setActiveSection("anxiety-education")}
-                          className="px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-teal-700 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer"
+                          className="w-full sm:w-auto px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-teal-700 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer text-center"
                         >
                           Learn About Anxiety
                         </button>
                         <button
                           id="hero-cta-resources"
                           onClick={() => setActiveSection("panic-disorder")}
-                          className="px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-blue-900 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer"
+                          className="w-full sm:w-auto px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-blue-900 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer text-center"
                         >
                           Explore Wellness Resources
                         </button>
                         <button
                           id="hero-cta-contact"
                           onClick={() => setActiveSection("contact")}
-                          className="px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-slate-700 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer"
+                          className="w-full sm:w-auto px-6 py-4 bg-white/60 backdrop-blur-md border border-white/80 text-slate-700 hover:bg-white/80 rounded-2xl font-bold shadow-sm transition duration-150 cursor-pointer text-center"
                         >
                           Contact Us
                         </button>
