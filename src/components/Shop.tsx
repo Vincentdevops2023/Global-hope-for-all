@@ -3,10 +3,47 @@ import {
   ShoppingBag, Search, Filter, Star, Check, ShieldCheck, 
   Truck, ArrowRight, X, Plus, Minus, Trash2, CreditCard, 
   Sparkles, Lock, Info, AlertCircle, PackageCheck, RefreshCw,
-  Gift, HeartHandshake, Leaf, Heart
+  Gift, HeartHandshake, Leaf, Heart, MessageSquare, Copy, ExternalLink,
+  FileText, CheckCircle2, Phone
 } from "lucide-react";
 import { Product, CartItem, OrderRecord } from "../types";
 import { ANXIETY_PRODUCTS } from "../data";
+
+// Helper function to generate complete itemized WhatsApp invoice text
+export const generateWhatsAppInvoiceText = (order: OrderRecord): string => {
+  const itemsText = order.items
+    .map(
+      (it, idx) =>
+        `${idx + 1}. *${it.product.name}*\n   Qty: ${it.quantity} × $${it.product.price.toFixed(2)} = *$${(
+          it.product.price * it.quantity
+        ).toFixed(2)}*`
+    )
+    .join("\n");
+
+  return `🧾 *GLOBAL HOPE FOR ALL - OFFICIAL ORDER INVOICE*
+----------------------------------------
+🆔 *Order Reference:* ${order.orderId}
+📅 *Order Date:* ${order.date}
+👤 *Customer:* ${order.shippingDetails.name}
+📧 *Email:* ${order.shippingDetails.email}
+📞 *Phone:* ${order.shippingDetails.phone || "Not specified"}
+📍 *Shipping Address:* ${order.shippingDetails.address}, ${order.shippingDetails.city}, ${order.shippingDetails.state} ${order.shippingDetails.zip}
+
+🛍️ *ITEMIZED PRODUCTS ORDERED:*
+${itemsText}
+
+----------------------------------------
+📊 *INVOICE BREAKDOWN:*
+• *Subtotal:* $${order.subtotal.toFixed(2)}
+${order.discount > 0 ? `• *Promo Discount:* -$${order.discount.toFixed(2)}\n` : ""}\
+• *Shipping:* ${order.shippingCost === 0 ? "FREE (Orders > $35)" : `$${order.shippingCost.toFixed(2)}`}
+• *Sales Tax (Est. 8%):* $${order.tax.toFixed(2)}
+----------------------------------------
+💵 *GRAND TOTAL DUE:* *$${order.total.toFixed(2)}*
+💳 *Payment / Order Method:* ${order.paymentMethod}
+----------------------------------------
+💬 *Order Action:* Hello Global Hope Support Team! I have placed this order and am sending my complete itemized invoice to process my shipment. Thank you!`;
+};
 
 interface ShopProps {
   onNavigateToPortal?: () => void;
@@ -40,12 +77,18 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
     firstName: "",
     lastName: "",
     email: "",
+    phone: "",
     address: "",
     city: "",
     state: "",
     zip: "",
-    paymentMethod: "card"
+    paymentMethod: "whatsapp"
   });
+
+  // Target WhatsApp Support Phone
+  const [targetWhatsappNumber, setTargetWhatsappNumber] = useState<string>("16624709606");
+  const [copiedInvoiceToast, setCopiedInvoiceToast] = useState<boolean>(false);
+  const [showInvoicePreview, setShowInvoicePreview] = useState<boolean>(true);
 
   // Completed Order State
   const [completedOrder, setCompletedOrder] = useState<OrderRecord | null>(null);
@@ -111,10 +154,36 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
     }
   };
 
+  // WhatsApp Invoice Redirect Helper
+  const handleRedirectToWhatsApp = (order: OrderRecord) => {
+    const message = generateWhatsAppInvoiceText(order);
+    const cleanNumber = targetWhatsappNumber.replace(/[^0-9]/g, "");
+    const whatsappUrl = `https://wa.me/${cleanNumber || "16624709606"}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleCopyInvoiceToClipboard = (order: OrderRecord) => {
+    const text = generateWhatsAppInvoiceText(order);
+    navigator.clipboard.writeText(text);
+    setCopiedInvoiceToast(true);
+    setTimeout(() => setCopiedInvoiceToast(false), 3000);
+  };
+
   // Process Checkout
-  const handlePlaceOrder = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!checkoutForm.firstName || !checkoutForm.email || !checkoutForm.address) return;
+  const handlePlaceOrder = (e: React.FormEvent, forceWhatsAppRedirect: boolean = false) => {
+    if (e) e.preventDefault();
+    if (!checkoutForm.firstName || !checkoutForm.email || !checkoutForm.address) {
+      alert("Please complete the required shipping fields (First Name, Email, Address).");
+      return;
+    }
+
+    const pmLabel = (checkoutForm.paymentMethod === 'whatsapp' || forceWhatsAppRedirect)
+      ? '📱 WhatsApp Direct Order & Invoice'
+      : checkoutForm.paymentMethod === 'card'
+      ? 'Credit Card (Stripe / WooCommerce)'
+      : checkoutForm.paymentMethod === 'paypal'
+      ? 'PayPal Express'
+      : 'Apple Pay';
 
     const newOrder: OrderRecord = {
       orderId: `WC-2026-${Math.floor(10000 + Math.random() * 90000)}`,
@@ -125,21 +194,27 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
       tax: estimatedTax,
       total: finalTotal,
       shippingDetails: {
-        name: `${checkoutForm.firstName} ${checkoutForm.lastName}`,
+        name: `${checkoutForm.firstName} ${checkoutForm.lastName}`.trim(),
         email: checkoutForm.email,
+        phone: checkoutForm.phone,
         address: checkoutForm.address,
         city: checkoutForm.city,
         state: checkoutForm.state,
         zip: checkoutForm.zip,
       },
-      paymentMethod: checkoutForm.paymentMethod === 'card' ? 'Credit Card (Stripe / WooCommerce)' : checkoutForm.paymentMethod === 'paypal' ? 'PayPal Express' : 'Apple Pay',
+      paymentMethod: pmLabel,
       date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-      status: 'Processing & Preparing Shipment'
+      status: 'Processing & Pending Dispatch'
     };
 
     setCompletedOrder(newOrder);
     setCart([]);
     setIsCheckoutOpen(false);
+
+    // If WhatsApp method selected or force redirected, trigger redirect to WhatsApp immediately!
+    if (checkoutForm.paymentMethod === 'whatsapp' || forceWhatsAppRedirect) {
+      handleRedirectToWhatsApp(newOrder);
+    }
   };
 
   // Filter products
@@ -654,10 +729,23 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
                     setIsCartOpen(false);
                     setIsCheckoutOpen(true);
                   }}
-                  className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-2xl text-xs uppercase tracking-wider shadow-lg shadow-teal-600/20 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-2xl text-xs uppercase tracking-wider shadow-lg shadow-teal-600/20 flex items-center justify-center gap-2 cursor-pointer transition hover:scale-[1.01]"
                 >
                   <CreditCard className="w-4 h-4" />
                   Proceed to Checkout
+                </button>
+
+                <button
+                  id="whatsapp-cart-checkout-btn"
+                  onClick={() => {
+                    setIsCartOpen(false);
+                    setIsCheckoutOpen(true);
+                    setCheckoutForm(prev => ({ ...prev, paymentMethod: "whatsapp" }));
+                  }}
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer transition hover:scale-[1.01]"
+                >
+                  <MessageSquare className="w-4 h-4 fill-current text-white" />
+                  Checkout via WhatsApp & Invoice
                 </button>
               </div>
             )}
@@ -669,30 +757,34 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
       {/* WOOCOMMERCE CHECKOUT MODAL */}
       {isCheckoutOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="glass-panel-heavy rounded-[36px] max-w-3xl w-full p-6 md:p-8 space-y-6 max-h-[92vh] overflow-y-auto relative animate-in zoom-in-95 duration-150">
+          <div className="glass-panel-heavy rounded-[36px] max-w-3xl w-full p-6 md:p-8 space-y-6 max-h-[92vh] overflow-y-auto relative animate-in zoom-in-95 duration-150 text-left">
             
             <button
               onClick={() => setIsCheckoutOpen(false)}
-              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-800 bg-white/40 rounded-full"
+              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-800 bg-white/40 rounded-full cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center gap-2.5 border-b border-white/40 pb-4">
-              <CreditCard className="w-6 h-6 text-teal-700" />
-              <div>
-                <h3 className="font-extrabold text-slate-950 text-xl font-sans">WooCommerce Checkout</h3>
-                <p className="text-xs text-slate-500">Secure 256-bit SSL encrypted transaction</p>
+            <div className="flex items-center justify-between border-b border-white/40 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-2xl bg-teal-600 text-white flex items-center justify-center shadow-md">
+                  <CreditCard className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-950 text-xl font-sans">WooCommerce Checkout</h3>
+                  <p className="text-xs text-slate-500">Secure SSL Encrypted • Direct WhatsApp Invoice Integration</p>
+                </div>
               </div>
             </div>
 
-            <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <form onSubmit={(e) => handlePlaceOrder(e, false)} className="grid grid-cols-1 md:grid-cols-12 gap-6">
               
               {/* Shipping Details */}
               <div className="md:col-span-7 space-y-4">
                 <h4 className="font-bold text-slate-800 text-sm flex items-center gap-1.5">
                   <Truck className="w-4 h-4 text-teal-700" />
-                  Shipping Information
+                  Shipping & Contact Information
                 </h4>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -720,16 +812,29 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-slate-700 text-[11px] font-semibold mb-1">Email Address for Confirmation *</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="alex@example.com"
-                    value={checkoutForm.email}
-                    onChange={(e) => setCheckoutForm({ ...checkoutForm, email: e.target.value })}
-                    className="w-full bg-white/50 border border-white/80 rounded-xl px-3 py-2 text-xs focus:outline-none"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-slate-700 text-[11px] font-semibold mb-1">Email Address *</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="alex@example.com"
+                      value={checkoutForm.email}
+                      onChange={(e) => setCheckoutForm({ ...checkoutForm, email: e.target.value })}
+                      className="w-full bg-white/50 border border-white/80 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-700 text-[11px] font-semibold mb-1">WhatsApp / Phone *</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+1 (662) 470-9606"
+                      value={checkoutForm.phone}
+                      onChange={(e) => setCheckoutForm({ ...checkoutForm, phone: e.target.value })}
+                      className="w-full bg-white/50 border border-white/80 rounded-xl px-3 py-2 text-xs focus:outline-none"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -780,23 +885,51 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
                   </div>
                 </div>
 
+                {/* Target WhatsApp Support Phone */}
+                <div className="bg-emerald-50/80 p-3.5 rounded-2xl border border-emerald-200 text-xs space-y-1.5">
+                  <div className="flex items-center justify-between text-emerald-950 font-bold">
+                    <span className="flex items-center gap-1.5">
+                      <MessageSquare className="w-4 h-4 text-emerald-600 fill-current" />
+                      Global Hope WhatsApp Order Hotline
+                    </span>
+                    <span className="bg-emerald-600 text-white text-[10px] font-mono px-2 py-0.5 rounded-full">Active</span>
+                  </div>
+                  <p className="text-emerald-800 text-[11px] leading-relaxed">
+                    Orders redirecting to WhatsApp dispatch an itemized, ready-to-send invoice to our official hotline number below:
+                  </p>
+                  <div className="flex items-center gap-2 pt-1">
+                    <Phone className="w-3.5 h-3.5 text-emerald-700" />
+                    <input
+                      type="text"
+                      value={targetWhatsappNumber}
+                      onChange={(e) => setTargetWhatsappNumber(e.target.value)}
+                      className="bg-white/80 border border-emerald-300 rounded-lg px-2.5 py-1 text-xs font-mono font-bold text-slate-800 w-44 focus:outline-none"
+                      title="Support WhatsApp phone number"
+                    />
+                    <span className="text-[10px] text-emerald-700 font-semibold">(Default Hotline)</span>
+                  </div>
+                </div>
+
                 {/* Payment Method Selector */}
-                <div className="space-y-2 pt-2">
-                  <label className="block text-slate-700 text-[11px] font-semibold">Payment Option</label>
-                  <div className="grid grid-cols-3 gap-2">
+                <div className="space-y-2 pt-1">
+                  <label className="block text-slate-700 text-[11px] font-semibold">Payment & Order Method</label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {[
-                      { id: "card", label: "Credit Card" },
-                      { id: "paypal", label: "PayPal" },
-                      { id: "apple", label: "Apple Pay" }
+                      { id: "whatsapp", label: "📱 WhatsApp Invoice", highlight: true },
+                      { id: "card", label: "💳 Credit Card", highlight: false },
+                      { id: "paypal", label: "🅿️ PayPal", highlight: false },
+                      { id: "apple", label: "🍎 Apple Pay", highlight: false }
                     ].map((pm) => (
                       <button
                         type="button"
                         key={pm.id}
                         onClick={() => setCheckoutForm({ ...checkoutForm, paymentMethod: pm.id })}
-                        className={`py-2 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
+                        className={`py-2 px-2.5 rounded-xl border text-xs font-bold transition cursor-pointer flex items-center justify-center gap-1.5 ${
                           checkoutForm.paymentMethod === pm.id
-                            ? "bg-teal-700 text-white border-teal-700"
-                            : "bg-white/40 text-slate-700 border-white/80 hover:bg-white"
+                            ? pm.highlight
+                              ? "bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30 ring-2 ring-emerald-400/50"
+                              : "bg-teal-700 text-white border-teal-700 shadow-md"
+                            : "bg-white/50 text-slate-700 border-white/80 hover:bg-white"
                         }`}
                       >
                         {pm.label}
@@ -846,14 +979,27 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
                   </div>
                 </div>
 
-                <button
-                  id="place-order-submit-btn"
-                  type="submit"
-                  className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-teal-600/20 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Lock className="w-4 h-4" />
-                  Place Order • ${finalTotal.toFixed(2)}
-                </button>
+                <div className="space-y-2 pt-2">
+                  <button
+                    id="whatsapp-checkout-redirect-btn"
+                    type="button"
+                    onClick={(e) => handlePlaceOrder(e, true)}
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer border border-emerald-400/30 transition hover:scale-[1.01]"
+                  >
+                    <MessageSquare className="w-4 h-4 fill-current text-white" />
+                    Complete Order & Redirect to WhatsApp
+                  </button>
+
+                  <button
+                    id="place-order-submit-btn"
+                    type="submit"
+                    className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition"
+                  >
+                    <Lock className="w-3.5 h-3.5" />
+                    Standard Order • ${finalTotal.toFixed(2)}
+                  </button>
+                </div>
+
               </div>
 
             </form>
@@ -862,33 +1008,71 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
         </div>
       )}
 
-      {/* COMPLETED ORDER RECEIPT MODAL */}
+      {/* COMPLETED ORDER RECEIPT MODAL WITH WHATSAPP INVOICE REDIRECT */}
       {completedOrder && (
-        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="glass-panel-heavy rounded-[36px] max-w-lg w-full p-6 md:p-8 space-y-6 text-center animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="glass-panel-heavy rounded-[36px] max-w-lg w-full p-6 md:p-8 space-y-5 text-center animate-in zoom-in-95 duration-200 text-left my-auto max-h-[92vh] overflow-y-auto">
             
-            <div className="w-16 h-16 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center mx-auto shadow-md">
-              <PackageCheck className="w-8 h-8" />
+            <div className="flex items-center justify-between">
+              <div className="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center shadow-md">
+                <PackageCheck className="w-7 h-7" />
+              </div>
+              <button
+                onClick={() => setCompletedOrder(null)}
+                className="p-2 text-slate-400 hover:text-slate-800 bg-white/40 rounded-full cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
             <div>
-              <span className="text-[10px] font-bold text-teal-700 uppercase tracking-widest bg-teal-50 border border-teal-100 px-3 py-1 rounded-full">
-                Order Confirmed
+              <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-widest bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full inline-block">
+                Order Placed & Invoice Ready
               </span>
-              <h2 className="text-2xl font-black text-slate-950 font-sans mt-2">Thank You for Your Order!</h2>
+              <h2 className="text-2xl font-black text-slate-950 font-sans mt-2">Order Confirmed!</h2>
               <p className="text-xs text-slate-500 mt-1">
-                Order ID: <strong className="text-slate-800 font-mono">{completedOrder.orderId}</strong>
+                Order Reference: <strong className="text-slate-800 font-mono">{completedOrder.orderId}</strong>
               </p>
             </div>
 
-            <div className="bg-white/40 p-4 rounded-2xl border border-white/60 text-xs space-y-2 text-left">
+            {/* WhatsApp Invoice Alert Banner */}
+            <div className="bg-gradient-to-r from-emerald-950 via-teal-900 to-slate-950 text-white p-4 rounded-2xl shadow-md border border-emerald-500/30 space-y-2">
+              <div className="flex items-center gap-2 text-emerald-300 font-bold text-xs">
+                <MessageSquare className="w-4 h-4 fill-current text-emerald-400" />
+                <span>Redirect to WhatsApp with Complete Invoice</span>
+              </div>
+              <p className="text-[11px] text-slate-200 leading-relaxed font-light">
+                Your order invoice has been generated. Click below to automatically launch WhatsApp with your pre-filled, itemized invoice text message to our support hotline.
+              </p>
+              <div className="pt-1 flex flex-col sm:flex-row gap-2">
+                <button
+                  id="receipt-redirect-whatsapp-btn"
+                  onClick={() => handleRedirectToWhatsApp(completedOrder)}
+                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-lg transition hover:scale-[1.02]"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Open WhatsApp & Send Invoice
+                </button>
+                <button
+                  id="receipt-copy-invoice-btn"
+                  onClick={() => handleCopyInvoiceToClipboard(completedOrder)}
+                  className="bg-white/20 hover:bg-white/30 text-white font-bold py-2.5 px-3 rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer transition border border-white/20"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                  {copiedInvoiceToast ? "Copied!" : "Copy Invoice"}
+                </button>
+              </div>
+            </div>
+
+            {/* Order Items Breakdown */}
+            <div className="bg-white/40 p-4 rounded-2xl border border-white/60 text-xs space-y-2">
               <div className="flex justify-between text-slate-600 border-b border-white/40 pb-2">
                 <span>Date: <strong>{completedOrder.date}</strong></span>
                 <span>Payment: <strong>{completedOrder.paymentMethod}</strong></span>
               </div>
 
               <div className="space-y-1.5 pt-1">
-                <strong className="text-slate-800 block font-semibold">Ordered Items:</strong>
+                <strong className="text-slate-800 block font-semibold">Purchased Items:</strong>
                 {completedOrder.items.map((it) => (
                   <div key={it.product.id} className="flex justify-between text-slate-700">
                     <span>{it.quantity}x {it.product.name}</span>
@@ -898,30 +1082,52 @@ export default function Shop({ onNavigateToPortal, cart, setCart }: ShopProps) {
               </div>
 
               <div className="border-t border-white/40 pt-2 flex justify-between font-black text-slate-900 text-sm">
-                <span>Total Paid:</span>
+                <span>Total Amount:</span>
                 <span>${completedOrder.total.toFixed(2)}</span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed">
-              A confirmation email and tracking link have been dispatched to <strong>{completedOrder.shippingDetails.email}</strong>. Discreet packaging ensures full privacy.
+            {/* Formatted Invoice Message Preview Collapsible */}
+            <div className="bg-slate-900/90 text-slate-200 p-3.5 rounded-2xl text-left space-y-2 border border-slate-700/80">
+              <div className="flex justify-between items-center text-xs">
+                <span className="font-bold text-slate-300 flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                  WhatsApp Invoice Text Preview
+                </span>
+                <button
+                  onClick={() => setShowInvoicePreview(!showInvoicePreview)}
+                  className="text-[10px] text-teal-300 hover:underline cursor-pointer"
+                >
+                  {showInvoicePreview ? "Hide" : "View Text"}
+                </button>
+              </div>
+
+              {showInvoicePreview && (
+                <pre className="text-[10px] font-mono whitespace-pre-wrap bg-slate-950/80 p-3 rounded-xl border border-slate-800 text-emerald-300 max-h-40 overflow-y-auto leading-relaxed">
+                  {generateWhatsAppInvoiceText(completedOrder)}
+                </pre>
+              )}
+            </div>
+
+            <p className="text-[11px] text-slate-600 leading-relaxed text-center">
+              A confirmation email has also been sent to <strong>{completedOrder.shippingDetails.email}</strong>.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-1">
               <button
                 id="order-portal-btn"
                 onClick={() => {
                   setCompletedOrder(null);
                   if (onNavigateToPortal) onNavigateToPortal();
                 }}
-                className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider shadow-md"
+                className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider shadow-md cursor-pointer transition"
               >
                 Go to Patient Portal
               </button>
               <button
                 id="order-continue-shopping-btn"
                 onClick={() => setCompletedOrder(null)}
-                className="w-full bg-white/60 hover:bg-white text-slate-800 font-bold py-3 rounded-xl text-xs uppercase tracking-wider border border-white/80"
+                className="w-full bg-white/60 hover:bg-white text-slate-800 font-bold py-3 rounded-xl text-xs uppercase tracking-wider border border-white/80 cursor-pointer transition"
               >
                 Continue Shopping
               </button>

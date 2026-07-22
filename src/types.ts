@@ -126,6 +126,7 @@ export interface OrderRecord {
   shippingDetails: {
     name: string;
     email: string;
+    phone?: string;
     address: string;
     city: string;
     state: string;
