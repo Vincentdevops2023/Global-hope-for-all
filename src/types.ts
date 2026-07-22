@@ -78,6 +78,20 @@ export interface Product {
   isBestSeller?: boolean;
 }
 
+export interface Testimonial {
+  id: string;
+  author: string;
+  roleOrLocation: string;
+  rating: number; // 5
+  category: 'Anxiety Care' | 'Panic Recovery' | 'Couples Intimacy' | 'Supplements & Shop' | 'General Consultation';
+  title: string;
+  comment: string;
+  date: string;
+  verified: boolean;
+  avatarUrl?: string;
+  productName?: string;
+}
+
 export interface CartItem {
   product: Product;
   quantity: number;

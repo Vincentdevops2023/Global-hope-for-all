@@ -524,3 +524,81 @@ export const ANXIETY_PRODUCTS: Product[] = [
   }
 ];
 
+export const PATIENT_TESTIMONIALS = [
+  {
+    id: "rev-1",
+    author: "Sarah M.",
+    roleOrLocation: "Verified Patient • Chicago, IL",
+    rating: 5,
+    category: "Panic Recovery",
+    title: "Changed my perspective on panic attacks entirely!",
+    comment: "I used to end up in the ER thinking my panic attacks were heart events. The box breathing guides and immediate grounding protocols from Global Hope For All gave me my life back. The counselors are extraordinarily empathetic.",
+    date: "July 14, 2026",
+    verified: true,
+    avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"
+  },
+  {
+    id: "rev-2",
+    author: "David & Elena K.",
+    roleOrLocation: "Couples Consultation • Austin, TX",
+    rating: 5,
+    category: "Couples Intimacy",
+    title: "Saved our marriage during high-stress transition",
+    comment: "Chronic work anxiety was ruining our emotional intimacy. The relationship communication templates and couples counseling sessions provided us actionable tools to express vulnerability without defensiveness.",
+    date: "July 02, 2026",
+    verified: true,
+    avatarUrl: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=200"
+  },
+  {
+    id: "rev-3",
+    author: "Marcus T.",
+    roleOrLocation: "Verified Patient • London, UK",
+    rating: 5,
+    category: "Anxiety Care",
+    title: "Ashwagandha KSM-66 + CBT Journal transformed my mornings",
+    comment: "The clinical quality of both the counseling advice and the shop supplements is unmatched. Ashwagandha KSM-66 combined with 10 minutes in the CBT journal every morning lowered my cortisol levels noticeably.",
+    date: "June 28, 2026",
+    verified: true,
+    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
+    productName: "KSM-66® Ashwagandha High-Potency Calm Complex"
+  },
+  {
+    id: "rev-4",
+    author: "Dr. Rachel V., PsyD",
+    roleOrLocation: "Clinical Psychologist • Boston, MA",
+    rating: 5,
+    category: "General Consultation",
+    title: "I frequently refer patients to Global Hope For All",
+    comment: "As a clinician, I am very selective about online wellness resources. Global Hope For All provides peer-reviewed educational articles, safe non-pharmacological grounding tools, and confidential consultation.",
+    date: "June 19, 2026",
+    verified: true,
+    avatarUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200"
+  },
+  {
+    id: "rev-5",
+    author: "Hannah L.",
+    roleOrLocation: "Verified Buyer • Seattle, WA",
+    rating: 5,
+    category: "Supplements & Shop",
+    title: "Fast shipping and genuine high-potency L-Theanine!",
+    comment: "Ordering through their WooCommerce store was seamless. The L-Theanine + Magnesium Glycinate bundle completely stopped my late-afternoon caffeine jitteriness and improved my sleep score.",
+    date: "June 10, 2026",
+    verified: true,
+    avatarUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200",
+    productName: "L-Theanine 200mg Ultra-Pure Nootropic Capsules"
+  },
+  {
+    id: "rev-6",
+    author: "Michael P.",
+    roleOrLocation: "Verified Patient • Toronto, Canada",
+    rating: 5,
+    category: "Panic Recovery",
+    title: "The emergency somatic reset guide worked in 3 minutes",
+    comment: "I had a sudden panic episode in my car before a major presentation. I opened the website on my phone, followed the 3-minute physical reset step-by-step, and was able to walk in completely grounded.",
+    date: "May 29, 2026",
+    verified: true,
+    avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200"
+  }
+];
+
+

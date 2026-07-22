@@ -4,7 +4,7 @@ import {
   Phone, Mail, ArrowRight, ShieldCheck, Check, ChevronDown, 
   Clock, Info, Compass, HelpCircle, Newspaper, Sparkles, 
   MapPin, Send, AlertTriangle, ExternalLink, CalendarClock,
-  BookMarked, Accessibility, ShoppingBag
+  BookMarked, Accessibility, ShoppingBag, Star
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -17,6 +17,7 @@ import Portal from "./components/Portal";
 import GoogleMapPlaceholder from "./components/GoogleMapPlaceholder";
 import Shop from "./components/Shop";
 import WhatsAppWidget from "./components/WhatsAppWidget";
+import ReviewsAndTestimonials from "./components/ReviewsAndTestimonials";
 
 
 // Data
@@ -220,6 +221,7 @@ export default function App() {
                 { id: "anxiety-education", label: "Anxiety Education" },
                 { id: "panic-disorder", label: "Panic Disorder" },
                 { id: "healthy-intimacy", label: "Intimacy & Wellness" },
+                { id: "testimonials", label: "⭐ Reviews" },
                 { id: "wellness-blog", label: "Wellness Blog" },
                 { id: "shop", label: "Shop & Supplements" },
                 { id: "patient-registration", label: "Patient Registration" },
@@ -315,6 +317,7 @@ export default function App() {
                   { id: "anxiety-education", label: "Anxiety Education" },
                   { id: "panic-disorder", label: "Panic Disorder Resources" },
                   { id: "healthy-intimacy", label: "Healthy Intimacy & Relationships" },
+                  { id: "testimonials", label: "⭐ Patient Reviews & Testimonials" },
                   { id: "wellness-blog", label: "Wellness Blog" },
                   { id: "shop", label: "Shop & Supplements (WooCommerce)" },
                   { id: "patient-registration", label: "Patient Registration" },
@@ -576,6 +579,83 @@ export default function App() {
                         </button>
                       </div>
 
+                    </div>
+                  </div>
+                </section>
+
+                {/* 5-Star Patient Reviews & Testimonials Showcase Block */}
+                <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 text-left">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest mb-2">
+                        <Star className="w-3.5 h-3.5 fill-pink-600 text-pink-600" />
+                        <span>Verified Patient & Product Reviews</span>
+                      </div>
+                      <h3 className="text-2xl sm:text-3xl font-black text-slate-950 font-sans">
+                        Trusted by 1,240+ Individuals & Families
+                      </h3>
+                      <p className="text-slate-500 text-xs mt-1">
+                        Read real 5-star experiences from verified patients, couples, and shop customers.
+                      </p>
+                    </div>
+
+                    <button
+                      id="home-see-all-reviews-btn"
+                      onClick={() => setActiveSection("testimonials")}
+                      className="bg-slate-900 hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-2xl text-xs flex items-center gap-1.5 shrink-0 transition cursor-pointer self-start sm:self-auto"
+                    >
+                      <span>View All Reviews</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div className="bg-gradient-to-br from-slate-900 to-zinc-900 text-white rounded-3xl p-6 border border-pink-500/20 shadow-lg space-y-3 relative">
+                      <div className="flex items-center gap-1 text-amber-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400" />
+                        ))}
+                      </div>
+                      <h4 className="font-extrabold text-sm text-pink-300">"Changed my perspective on panic entirely!"</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed font-light">
+                        The box breathing guides and somatic grounding protocols gave me my life back. The counseling support is extraordinary.
+                      </p>
+                      <div className="pt-2 border-t border-white/10 flex justify-between items-center text-[11px] text-slate-400 font-mono">
+                        <span>Sarah M. • Chicago, IL</span>
+                        <span className="text-emerald-400 font-bold">Verified Patient</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-slate-900 to-zinc-900 text-white rounded-3xl p-6 border border-pink-500/20 shadow-lg space-y-3 relative">
+                      <div className="flex items-center gap-1 text-amber-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400" />
+                        ))}
+                      </div>
+                      <h4 className="font-extrabold text-sm text-pink-300">"Saved our marriage during a stressful year"</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed font-light">
+                        Work anxiety was destroying our intimacy. The couples communication templates gave us practical tools to reconnect.
+                      </p>
+                      <div className="pt-2 border-t border-white/10 flex justify-between items-center text-[11px] text-slate-400 font-mono">
+                        <span>David & Elena K. • Austin, TX</span>
+                        <span className="text-emerald-400 font-bold">Couples Patient</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-slate-900 to-zinc-900 text-white rounded-3xl p-6 border border-pink-500/20 shadow-lg space-y-3 relative">
+                      <div className="flex items-center gap-1 text-amber-400">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400" />
+                        ))}
+                      </div>
+                      <h4 className="font-extrabold text-sm text-pink-300">"Fast delivery & pure Ashwagandha KSM-66"</h4>
+                      <p className="text-xs text-slate-300 leading-relaxed font-light">
+                        Ordering through their store was effortless. Combining the supplement with morning CBT journal entries reduced my daily stress.
+                      </p>
+                      <div className="pt-2 border-t border-white/10 flex justify-between items-center text-[11px] text-slate-400 font-mono">
+                        <span>Marcus T. • London, UK</span>
+                        <span className="text-emerald-400 font-bold">Verified Buyer</span>
+                      </div>
                     </div>
                   </div>
                 </section>
@@ -1301,6 +1381,14 @@ export default function App() {
               />
             )}
 
+            {/* VIEW 13: PATIENT REVIEWS & TESTIMONIALS */}
+            {activeSection === "testimonials" && (
+              <ReviewsAndTestimonials
+                onNavigateToBooking={() => setActiveSection("appointment-booking")}
+                onNavigateToShop={() => setActiveSection("shop")}
+              />
+            )}
+
           </motion.div>
 
         </AnimatePresence>
@@ -1388,6 +1476,7 @@ export default function App() {
               <li><button onClick={() => setActiveSection("anxiety-education")} className="hover:text-white transition cursor-pointer">Anxiety Education</button></li>
               <li><button onClick={() => setActiveSection("panic-disorder")} className="hover:text-white transition cursor-pointer">Panic Disorder Resources</button></li>
               <li><button onClick={() => setActiveSection("healthy-intimacy")} className="hover:text-white transition cursor-pointer">Healthy Intimacy</button></li>
+              <li><button onClick={() => setActiveSection("testimonials")} className="hover:text-white transition cursor-pointer text-pink-300 font-semibold">⭐ Patient Reviews & Testimonials</button></li>
               <li><button onClick={() => setActiveSection("shop")} className="hover:text-white transition cursor-pointer text-amber-300 font-semibold">Shop & Supplements (WooCommerce)</button></li>
             </ul>
 
