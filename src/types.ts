@@ -56,3 +56,51 @@ export interface InfoSheet {
   fileSize: string;
   category: string;
 }
+
+export interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviewCount: number;
+  category: 'Supplements' | 'Herbal Teas & Infusions' | 'Sensory & Grounding' | 'Journals & Workbooks';
+  badge?: string;
+  image: string;
+  shortDescription: string;
+  description: string;
+  benefits: string[];
+  ingredients?: string;
+  usageInstructions?: string;
+  safetyNote?: string;
+  inStock: boolean;
+  isBestSeller?: boolean;
+}
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}
+
+export interface OrderRecord {
+  orderId: string;
+  items: CartItem[];
+  subtotal: number;
+  discount: number;
+  shippingCost: number;
+  tax: number;
+  total: number;
+  shippingDetails: {
+    name: string;
+    email: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+  };
+  paymentMethod: string;
+  date: string;
+  status: string;
+}
+

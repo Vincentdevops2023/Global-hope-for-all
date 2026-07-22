@@ -1,4 +1,5 @@
-import { BlogPost, FAQItem, InfoSheet } from "./types";
+import { BlogPost, FAQItem, InfoSheet, Product } from "./types";
+
 
 export const ANXIETY_ARTICLES = [
   {
@@ -333,3 +334,193 @@ export const INFO_SHEETS: InfoSheet[] = [
     category: "Healthy Intimacy"
   }
 ];
+
+export const ANXIETY_PRODUCTS: Product[] = [
+  {
+    id: "magnesium-calm-complex",
+    name: "Magnesium L-Threonate & Glycinate Calm Complex",
+    slug: "magnesium-calm-complex",
+    price: 34.99,
+    originalPrice: 42.00,
+    rating: 4.9,
+    reviewCount: 184,
+    category: "Supplements",
+    badge: "Best Seller",
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "High-absorption dual-form magnesium engineered to cross the blood-brain barrier, supporting neural tranquility and muscle tension relief.",
+    description: "Our Calm Complex combines clinical-grade Magnesium L-Threonate and Magnesium Glycinate with Vitamin B6 (P5P). Formulated to promote cognitive calm, alleviate somatic restfulness, and encourage restorative sleep without morning grogginess.",
+    benefits: [
+      "Supports neural synaptic plasticity & brain clarity",
+      "Encourages muscle relaxation & eases physical tension",
+      "High bioavailability with zero digestive discomfort",
+      "Non-GMO, Gluten-Free, and Vegan certified"
+    ],
+    ingredients: "Magnesium L-Threonate (1,000mg), Magnesium Glycinate (400mg), Pyridoxal-5-Phosphate (Vitamin B6 - 10mg), BioPerine® Black Pepper Extract.",
+    usageInstructions: "Take 2 capsules nightly with warm water 30-45 minutes before sleep, or as directed by your healthcare professional.",
+    safetyNote: "Consult a healthcare provider before use if pregnant, nursing, or taking blood pressure medication. Keep out of reach of children.",
+    inStock: true,
+    isBestSeller: true
+  },
+  {
+    id: "l-theanine-gaba-synergy",
+    name: "L-Theanine & GABA Synergy Acute Calm Formula",
+    slug: "l-theanine-gaba-synergy",
+    price: 29.99,
+    originalPrice: 36.00,
+    rating: 4.8,
+    reviewCount: 142,
+    category: "Supplements",
+    badge: "Fast Acting",
+    image: "https://images.unsplash.com/photo-1550572017-edd951aa8f72?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "Fast-acting chewable amino acid blend providing alpha-wave brainwave encouragement and acute stress buffering without drowsiness.",
+    description: "Formulated with patented Suntheanine® L-Theanine, PharmaGABA®, and Lemon Balm extract. Promotes calm focus within 20-30 minutes, ideal for high-stress workday moments, public speaking anticipation, or acute nervous tension.",
+    benefits: [
+      "Promotes calming alpha brainwave activity",
+      "Buffers cortisol response during acute stress",
+      "Drowsiness-free daytime mental clarity",
+      "Third-party lab tested for purity & potency"
+    ],
+    ingredients: "Suntheanine® L-Theanine (200mg), PharmaGABA® (100mg), Lemon Balm Extract (150mg), Holy Basil (100mg).",
+    usageInstructions: "Chew or dissolve 1-2 tablets as needed during times of elevated stress or anticipatory anxiety. Maximum 4 per day.",
+    safetyNote: "Do not exceed recommended dose. May cause mild relaxation; use caution when operating heavy machinery.",
+    inStock: true,
+    isBestSeller: true
+  },
+  {
+    id: "ashwagandha-rhodiola-adaptogen",
+    name: "Ashwagandha KSM-66 & Rhodiola Organic Adaptogen Blend",
+    slug: "ashwagandha-rhodiola-adaptogen",
+    price: 32.50,
+    originalPrice: 39.00,
+    rating: 4.9,
+    reviewCount: 210,
+    category: "Supplements",
+    badge: "Clinically Studied",
+    image: "https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "Full-spectrum KSM-66® organic ashwagandha combined with standardized Rhodiola Rosea to rebalance adrenal exhaustion and systemic stress.",
+    description: "Daily adaptogenic support for chronic burnout, nervous fatigue, and hormonal cortisol spikes. Helps modulate the HPA-axis (hypothalamic-pituitary-adrenal) for steady emotional resilience and mental stamina over time.",
+    benefits: [
+      "Clinically shown to lower serum cortisol levels",
+      "Sustains emotional stamina without jitters",
+      "Supports healthy thyroid and adrenal function",
+      "100% USDA Organic certified"
+    ],
+    ingredients: "Organic KSM-66® Ashwagandha Root Extract (600mg, 5% Withanolides), Rhodiola Rosea Extract (200mg, 3% Rosavins), Black Pepper Extract.",
+    usageInstructions: "Take 1 capsule twice daily with meals (morning and lunch) for at least 30 consecutive days for optimal benefits.",
+    safetyNote: "Not recommended for individuals with autoimmune thyroid conditions unless advised by a physician.",
+    inStock: true
+  },
+  {
+    id: "chamomile-passionflower-tea",
+    name: "Organic Chamomile, Passionflower & Lemon Balm Tea Blend",
+    slug: "chamomile-passionflower-tea",
+    price: 18.99,
+    rating: 4.9,
+    reviewCount: 96,
+    category: "Herbal Teas & Infusions",
+    badge: "100% Organic",
+    image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "Hand-blended loose leaf botanical infusion designed to ease nervous stomach tightness and soothe evening racing thoughts.",
+    description: "Crafted with whole-flower Egyptian Chamomile, Organic Passionflower, Lemon Balm leaf, and Lavender buds. Naturally caffeine-free and rich in botanical essential oils that encourage parasympathetic nervous system tone.",
+    benefits: [
+      "Soothes nervous digestive tightness & nausea",
+      "Encourages deep parasympathetic relaxation",
+      "100% Caffeine-free relaxing evening ritual",
+      "Includes reusable stainless steel tea infuser"
+    ],
+    ingredients: "Organic Chamomile Flowers, Organic Passionflower Herb, Organic Lemon Balm, Organic Lavender Buds, Organic Oat Straw.",
+    usageInstructions: "Steep 1 tablespoon in 8 oz of boiling water for 7-10 minutes. Sip slowly while practicing 4-7-8 breathing.",
+    safetyNote: "Contains chamomile; avoid if allergic to ragweed or plants in the Asteraceae family.",
+    inStock: true
+  },
+  {
+    id: "weighted-grounding-lap-pad",
+    name: "Deep Pressure Weighted Calming Grounding Lap Pad (7 lbs)",
+    slug: "weighted-grounding-lap-pad",
+    price: 44.99,
+    originalPrice: 54.99,
+    rating: 4.8,
+    reviewCount: 128,
+    category: "Sensory & Grounding",
+    badge: "Somatic Tool",
+    image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "7lb weighted lap pad with ultra-soft bamboo velvet cover providing proprioceptive sensory input to instantly calm panic spikes.",
+    description: "Designed for desk work, reading, or acute panic recovery. Deep Touch Pressure (DTP) technology triggers the brain's release of serotonin and endorphins while easing restless legs and racing heart rate.",
+    benefits: [
+      "Provides targeted proprioceptive sensory grounding",
+      "Hypoallergenic non-toxic micro-glass beads",
+      "Removable, washable organic bamboo velvet cover",
+      "Portable 20x24 inch size fits in tote bags"
+    ],
+    usageInstructions: "Place over lap, shoulders, or chest while sitting or resting during moments of anxiety or intense focus work.",
+    safetyNote: "For adult and teenager use. Do not cover face or restrict airway.",
+    inStock: true
+  },
+  {
+    id: "lavender-bergamot-rollon",
+    name: "Lavender & Bergamot Botanical Aromatherapy Roll-On",
+    slug: "lavender-bergamot-rollon",
+    price: 16.50,
+    rating: 4.7,
+    reviewCount: 88,
+    category: "Sensory & Grounding",
+    badge: "Essential Oil",
+    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "Organic therapeutic-grade aromatherapy oil roller for instant olfactory stimulation and sensory grounding during panic episodes.",
+    description: "Formulated with pure Bulgarian Lavender, Italian Bergamot (FCF), Ylang Ylang, and Organic Golden Jojoba Carrier Oil. Compact stainless steel roller ball for discrete application at pulse points.",
+    benefits: [
+      "Instant olfactory neural pathway stimulation",
+      "Convenient pocket-sized leakproof design",
+      "Pre-diluted in organic jojoba for direct skin safety",
+      "Free of synthetic fragrances, parabens, and phthalates"
+    ],
+    usageInstructions: "Roll generously onto wrist pulse points, temples, or palm centers. Cup hands over nose and inhale deeply 5 times.",
+    safetyNote: "Perform a small skin patch test before full use. For external aromatic use only.",
+    inStock: true
+  },
+  {
+    id: "cbt-anxiety-guided-journal",
+    name: "Daily Anxiety & Panic Symptom Tracker CBT Guided Journal",
+    slug: "cbt-anxiety-guided-journal",
+    price: 22.00,
+    originalPrice: 28.00,
+    rating: 5.0,
+    reviewCount: 156,
+    category: "Journals & Workbooks",
+    badge: "Clinical Workbook",
+    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "90-day structured cognitive behavioral therapy (CBT) journal with daily mood charts, trigger logs, and grounding exercises.",
+    description: "Spiral-bound hardback journal created by licensed counselors. Includes daily 5-minute morning prompts, panic log templates, cognitive thought-reframing worksheets, and weekly progress charts.",
+    benefits: [
+      "Structured CBT thought-challenging framework",
+      "Track physical triggers, caffeine, & sleep correlation",
+      "High-quality lay-flat binding with ribbon bookmark",
+      "Includes 12 panic safety wallet cards"
+    ],
+    usageInstructions: "Complete 5 minutes every morning to set intentions, and log high-stress moments as they occur to discover personal triggers.",
+    inStock: true,
+    isBestSeller: true
+  },
+  {
+    id: "tactile-brass-fidget-coin",
+    name: "Tactile Brass Grounding Fidget Coin & Worry Ring Set",
+    slug: "tactile-brass-fidget-coin",
+    price: 24.99,
+    rating: 4.8,
+    reviewCount: 74,
+    category: "Sensory & Grounding",
+    badge: "Tactile Anchor",
+    image: "https://images.unsplash.com/photo-1611591475281-b1c970f759a7?auto=format&fit=crop&q=80&w=600",
+    shortDescription: "Heavy solid brass coin with textured concentric ridges and quiet spinning ring designed for subtle sensory redirection in public.",
+    description: "Physical sensory focus tools engineered to occupy restless fingers and redirect hyper-vigilant attention during meetings, public transit, or crowded environments.",
+    benefits: [
+      "Solid brass weighted tactile grounding sensation",
+      "Silent dual-spin bearing mechanism",
+      "Discrete anti-anxiety fidget tool",
+      "Includes protective velvet travel pouch"
+    ],
+    usageInstructions: "Hold the coin between thumb and forefinger, tracing the concentric ridges when feeling restless or anxious.",
+    inStock: true
+  }
+];
+

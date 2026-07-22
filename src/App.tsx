@@ -4,7 +4,7 @@ import {
   Phone, Mail, ArrowRight, ShieldCheck, Check, ChevronDown, 
   Clock, Info, Compass, HelpCircle, Newspaper, Sparkles, 
   MapPin, Send, AlertTriangle, ExternalLink, CalendarClock,
-  BookMarked, Accessibility
+  BookMarked, Accessibility, ShoppingBag
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -15,6 +15,8 @@ import AppointmentForm from "./components/AppointmentForm";
 import RegistrationForm from "./components/RegistrationForm";
 import Portal from "./components/Portal";
 import GoogleMapPlaceholder from "./components/GoogleMapPlaceholder";
+import Shop from "./components/Shop";
+
 
 // Data
 import { 
@@ -24,11 +26,13 @@ import {
   BLOG_POSTS, 
   GENERAL_FAQS 
 } from "./data";
-import { BlogPost, Appointment } from "./types";
+import { BlogPost, Appointment, CartItem } from "./types";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cart, setCart] = useState<CartItem[]>([]);
+
   
   // Blog search / category selection
   const [selectedBlogCategory, setSelectedBlogCategory] = useState<string>("All");
@@ -114,6 +118,14 @@ export default function App() {
           keywords: `${baseKeywords}, wellness articles, mindfulness blog`,
           canonical,
           type: "Article" as const
+        };
+      case "shop":
+        return {
+          title: "WooCommerce Anxiety Shop & Supplements | Global Hope For All",
+          description: "Browse evidence-grounded anxiety supplements, magnesium complexes, organic botanical teas, 7lb weighted grounding lap pads, and CBT guided journals.",
+          keywords: `${baseKeywords}, anxiety supplements, magnesium threonate, L-theanine, ashwagandha, grounding tools, CBT journal, WooCommerce shop`,
+          canonical,
+          type: "MedicalWebPage" as const
         };
       case "faq":
         return {
@@ -201,6 +213,7 @@ export default function App() {
                 { id: "panic-disorder", label: "Panic Disorder" },
                 { id: "healthy-intimacy", label: "Intimacy & Wellness" },
                 { id: "wellness-blog", label: "Wellness Blog" },
+                { id: "shop", label: "Shop & Supplements" },
                 { id: "patient-registration", label: "Patient Registration" },
                 { id: "appointment-booking", label: "Book Consultation" },
                 { id: "patient-portal", label: "Patient Portal" },
@@ -222,24 +235,38 @@ export default function App() {
               ))}
             </nav>
 
-            {/* CTA Book Consultation Header button */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* CTA Book Consultation & Shop Header buttons */}
+            <div className="hidden lg:flex items-center gap-2">
+              <button
+                id="header-cta-shop"
+                onClick={() => setActiveSection("shop")}
+                className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-900 border border-amber-300/60 px-3.5 py-2 rounded-full font-bold text-xs transition duration-150 flex items-center gap-1.5 cursor-pointer"
+              >
+                <ShoppingBag className="w-3.5 h-3.5 text-amber-700" />
+                <span>Shop</span>
+                {cart.length > 0 && (
+                  <span className="bg-amber-700 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full ml-0.5">
+                    {cart.reduce((acc, item) => acc + item.quantity, 0)}
+                  </span>
+                )}
+              </button>
               <button
                 id="header-cta-book"
                 onClick={() => setActiveSection("appointment-booking")}
-                className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-full font-bold text-xs transition duration-150 flex items-center gap-1.5 shadow-lg shadow-teal-600/20 cursor-pointer"
+                className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-full font-bold text-xs transition duration-150 flex items-center gap-1.5 shadow-lg shadow-teal-600/20 cursor-pointer"
               >
                 <Calendar className="w-3.5 h-3.5" />
-                Book Appointment
+                Book Consultation
               </button>
               <button
                 id="header-cta-portal"
                 onClick={() => setActiveSection("patient-portal")}
-                className="bg-white/40 backdrop-blur-sm border border-white/60 text-teal-700 hover:text-teal-800 hover:bg-white/60 px-5 py-2.5 rounded-full font-bold text-xs transition duration-150 flex items-center gap-1.5 shadow-sm"
+                className="bg-white/40 backdrop-blur-sm border border-white/60 text-teal-700 hover:text-teal-800 hover:bg-white/60 px-4 py-2 rounded-full font-bold text-xs transition duration-150 flex items-center gap-1.5 shadow-sm cursor-pointer"
               >
                 Portal Login
               </button>
             </div>
+
 
             {/* Mobile menu toggle */}
             <div className="xl:hidden flex items-center gap-2">
@@ -281,12 +308,14 @@ export default function App() {
                   { id: "panic-disorder", label: "Panic Disorder Resources" },
                   { id: "healthy-intimacy", label: "Healthy Intimacy & Relationships" },
                   { id: "wellness-blog", label: "Wellness Blog" },
+                  { id: "shop", label: "Shop & Supplements (WooCommerce)" },
                   { id: "patient-registration", label: "Patient Registration" },
                   { id: "appointment-booking", label: "Appointment Booking" },
                   { id: "patient-portal", label: "Patient Information Portal" },
                   { id: "faq", label: "FAQ" },
                   { id: "contact", label: "Contact Us" }
                 ].map((item) => (
+
                   <button
                     id={`mobile-nav-link-${item.id}`}
                     key={item.id}
@@ -1255,7 +1284,17 @@ export default function App() {
               </div>
             )}
 
+            {/* VIEW 12: WOOCOMMERCE SHOP & SUPPLEMENTS */}
+            {activeSection === "shop" && (
+              <Shop
+                cart={cart}
+                setCart={setCart}
+                onNavigateToPortal={() => setActiveSection("patient-portal")}
+              />
+            )}
+
           </motion.div>
+
         </AnimatePresence>
       </main>
 
@@ -1338,7 +1377,9 @@ export default function App() {
               <li><button onClick={() => setActiveSection("anxiety-education")} className="hover:text-white transition cursor-pointer">Anxiety Education</button></li>
               <li><button onClick={() => setActiveSection("panic-disorder")} className="hover:text-white transition cursor-pointer">Panic Disorder Resources</button></li>
               <li><button onClick={() => setActiveSection("healthy-intimacy")} className="hover:text-white transition cursor-pointer">Healthy Intimacy</button></li>
+              <li><button onClick={() => setActiveSection("shop")} className="hover:text-white transition cursor-pointer text-amber-300 font-semibold">Shop & Supplements (WooCommerce)</button></li>
             </ul>
+
           </div>
 
           <div className="space-y-2.5">
