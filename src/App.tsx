@@ -184,10 +184,10 @@ export default function App() {
         <span className="inline-block w-2 h-2 bg-emerald-400 rounded-full animate-pulse" aria-hidden="true"></span>
         <span>Secure & Private Platform: Providing trusted mental health education since 2026</span>
         <a 
-          href="https://wa.me/15550192834?text=Hello%20Global%20Hope%20Support" 
+          href="https://wa.me/16624709606?text=Hello%20Global%20Hope%20Support" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="ml-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 transition shadow-sm"
+          className="ml-1 bg-pink-600 hover:bg-pink-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 transition shadow-sm shadow-pink-600/30"
         >
           <span>💬 WhatsApp Chat</span>
         </a>
