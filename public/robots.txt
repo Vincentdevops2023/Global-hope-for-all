@@ -1,0 +1,6 @@
+# Robots.txt for Global Hope For All
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://globalhopeforall.org/sitemap.xml

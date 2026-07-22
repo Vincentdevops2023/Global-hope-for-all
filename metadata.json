@@ -1,0 +1,6 @@
+{
+  "name": "Global Hope For All",
+  "description": "Global Hope For All provides trusted educational resources on anxiety, panic disorders, healthy relationships, emotional wellness, and mental well-being.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
