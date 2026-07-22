@@ -19,6 +19,7 @@ import Shop from "./components/Shop";
 import WhatsAppWidget from "./components/WhatsAppWidget";
 import ReviewsAndTestimonials from "./components/ReviewsAndTestimonials";
 import BlogSection from "./components/BlogSection";
+import AdminPanel from "./components/AdminPanel";
 
 
 // Data
@@ -53,6 +54,34 @@ export default function App() {
   // Contact form state
   const [contactForm, setContactForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [contactSuccess, setContactSuccess] = useState(false);
+
+  // Admin and Booking state
+  const [appointmentsList, setAppointmentsList] = useState<Appointment[]>([
+    {
+      id: "app-101",
+      name: "Eleanor Vance",
+      email: "eleanor.vance@example.com",
+      phone: "+1 (555) 234-5678",
+      date: "2026-07-28",
+      time: "10:00 AM EST",
+      reason: "Severe panic attack frequency & somatic grounding guidance",
+      contactMethod: "email",
+      status: "Confirmed",
+      createdAt: "2026-07-20"
+    },
+    {
+      id: "app-102",
+      name: "Marcus Brody",
+      email: "m.brody@example.com",
+      phone: "+1 (555) 876-5432",
+      date: "2026-07-30",
+      time: "02:30 PM EST",
+      reason: "Couples relationship anxiety & intimacy communication consultation",
+      contactMethod: "phone",
+      status: "Pending",
+      createdAt: "2026-07-21"
+    }
+  ]);
 
   // Sync to top of page on route change
   useEffect(() => {
@@ -229,7 +258,8 @@ export default function App() {
                 { id: "appointment-booking", label: "Book Consultation" },
                 { id: "patient-portal", label: "Patient Portal" },
                 { id: "faq", label: "FAQ" },
-                { id: "contact", label: "Contact" }
+                { id: "contact", label: "Contact" },
+                { id: "admin-panel", label: "🔐 Admin" }
               ].map((item) => (
                 <button
                   id={`nav-link-${item.id}`}
@@ -325,7 +355,8 @@ export default function App() {
                   { id: "appointment-booking", label: "Appointment Booking" },
                   { id: "patient-portal", label: "Patient Information Portal" },
                   { id: "faq", label: "FAQ" },
-                  { id: "contact", label: "Contact Us" }
+                  { id: "contact", label: "Contact Us" },
+                  { id: "admin-panel", label: "🔐 Admin Back-End Control Panel" }
                 ].map((item) => (
 
                   <button
@@ -1241,6 +1272,15 @@ export default function App() {
               />
             )}
 
+            {/* VIEW 14: ADMIN BACK-END CONTROL PANEL */}
+            {activeSection === "admin-panel" && (
+              <AdminPanel
+                onNavigateSection={(sec) => setActiveSection(sec)}
+                appointmentsList={appointmentsList}
+                setAppointmentsList={setAppointmentsList}
+              />
+            )}
+
           </motion.div>
 
         </AnimatePresence>
@@ -1340,6 +1380,7 @@ export default function App() {
               <li><button onClick={() => setActiveSection("patient-registration")} className="hover:text-white transition cursor-pointer">Patient Registration</button></li>
               <li><button onClick={() => setActiveSection("appointment-booking")} className="hover:text-white transition cursor-pointer">Appointment Booking</button></li>
               <li><button onClick={() => setActiveSection("patient-portal")} className="hover:text-white transition cursor-pointer">Patient Information Portal</button></li>
+              <li><button onClick={() => setActiveSection("admin-panel")} className="hover:text-white transition cursor-pointer text-amber-300 font-bold">🔐 Admin Back-End Login</button></li>
               <li><button onClick={() => setActiveSection("faq")} className="hover:text-white transition cursor-pointer">FAQ</button></li>
               <li><button onClick={() => setActiveSection("contact")} className="hover:text-white transition cursor-pointer">Contact Us</button></li>
             </ul>
