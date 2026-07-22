@@ -16,6 +16,7 @@ import RegistrationForm from "./components/RegistrationForm";
 import Portal from "./components/Portal";
 import GoogleMapPlaceholder from "./components/GoogleMapPlaceholder";
 import Shop from "./components/Shop";
+import WhatsAppWidget from "./components/WhatsAppWidget";
 
 
 // Data
@@ -179,9 +180,17 @@ export default function App() {
       </a>
 
       {/* Top Banner Notice - Privacy Emphasis */}
-      <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-teal-900 text-white text-center py-2 px-4 text-xs font-medium flex items-center justify-center gap-2 border-b border-white/10">
+      <div className="bg-gradient-to-r from-blue-950 via-blue-900 to-teal-900 text-white text-center py-2 px-4 text-xs font-medium flex flex-wrap items-center justify-center gap-2 border-b border-white/10">
         <span className="inline-block w-2 h-2 bg-emerald-400 rounded-full animate-pulse" aria-hidden="true"></span>
         <span>Secure & Private Platform: Providing trusted mental health education since 2026</span>
+        <a 
+          href="https://wa.me/15550192834?text=Hello%20Global%20Hope%20Support" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="ml-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 transition shadow-sm"
+        >
+          <span>💬 WhatsApp Chat</span>
+        </a>
       </div>
 
       {/* Navigation Header */}
@@ -1352,6 +1361,9 @@ export default function App() {
 
       {/* Floating interactive AI Companion */}
       <AICompanion isFloating={true} />
+
+      {/* Floating WhatsApp Chat Pop-up */}
+      <WhatsAppWidget />
 
       {/* Footer */}
       <footer className="bg-slate-950 text-slate-400 py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-900 text-left text-xs space-y-8">
