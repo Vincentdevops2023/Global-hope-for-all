@@ -23,6 +23,22 @@ export interface PatientProfile {
   username: string;
 }
 
+export interface FurtherReadingLink {
+  title: string;
+  source: string; // e.g. "NIMH Clinical Guidelines", "Global Hope For All Guide", "PubMed Study"
+  url: string;
+  isExternal?: boolean;
+  targetSection?: string; // App section like "panic-disorder", "shop", "anxiety-education"
+  description?: string;
+}
+
+export interface KeywordHighlight {
+  keyword: string;
+  definition: string;
+  targetSection?: string;
+  externalUrl?: string;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -35,6 +51,8 @@ export interface BlogPost {
   readTime: string;
   tags: string[];
   image: string;
+  keywords?: KeywordHighlight[];
+  furtherReading?: FurtherReadingLink[];
 }
 
 export interface ChatMessage {

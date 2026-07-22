@@ -205,18 +205,70 @@ export const BLOG_POSTS: BlogPost[] = [
 ### 1. The 90-Second Tech Detox
 Every 2 hours, step away from all screens. Close your eyes, inhale slowly, and let your hands rest flat. This resets your eyes and breaks the continuous cognitive processing cycle.
 
-### 2. Radical Hydration
+### 2. Radical Hydration & Cortisol Control
 Keep a thermal bottle with you. Dehydration triggers cortisol production, which mimics physical stress. Drink structured sips of water throughout the morning.
 
-### 3. Mindful Transitions
-Before starting your car or joining a virtual meeting, sit in silence for 30 seconds. Acknowledge that you are moving from one task to another, letting go of the previous context.
+### 3. Mindful Transitions & Box Breathing
+Before starting your car or joining a virtual meeting, sit in silence for 30 seconds. Practice box breathing (inhale 4s, hold 4s, exhale 4s, hold 4s) to reset your autonomic nervous system.
 
-Implementing just two of these micro-habits can successfully lower your baseline heart rate and keep you centered.`,
+Implementing just two of these micro-habits can successfully lower your baseline heart rate, modulate cortisol, and keep you centered.`,
     author: "Elena Vasquez, Wellness Specialist",
     date: "July 15, 2026",
     readTime: "4 min read",
     tags: ["self-care", "stress management", "mindfulness", "habits"],
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400"
+    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400",
+    keywords: [
+      {
+        keyword: "Cortisol",
+        definition: "The primary stress hormone produced by the adrenal glands, which raises heart rate and blood sugar during stress response.",
+        externalUrl: "https://www.ncbi.nlm.nih.gov/books/NBK538239/"
+      },
+      {
+        keyword: "Autonomic Nervous System",
+        definition: "The branch of the nervous system regulating involuntary functions like heart rate, digestion, and respiratory rate.",
+        externalUrl: "https://www.nimh.nih.gov/health/topics/anxiety-disorders"
+      },
+      {
+        keyword: "Box Breathing",
+        definition: "A tactical breathing technique (4s in, 4s hold, 4s out, 4s hold) used to rapidly activate the parasympathetic nervous system.",
+        targetSection: "anxiety-education"
+      },
+      {
+        keyword: "Cognitive Processing",
+        definition: "The mental action or process of acquiring knowledge and understanding through thought, experience, and the senses.",
+        externalUrl: "https://www.adaa.org/"
+      }
+    ],
+    furtherReading: [
+      {
+        title: "Anxiety Management Quick Start Guide (PDF Download)",
+        source: "Global Hope For All Patient Library",
+        url: "#",
+        targetSection: "anxiety-education",
+        description: "A compact 2-page cheat sheet detailing physical grounding techniques, box breathing protocols, and daily stress audits."
+      },
+      {
+        title: "KSM-66® Ashwagandha & L-Theanine Nootropic Capsules",
+        source: "Global Hope For All WooCommerce Shop",
+        url: "#",
+        targetSection: "shop",
+        description: "Clinical-grade herbal supplements formulated to support healthy morning cortisol balance and nervous system relaxation."
+      },
+      {
+        title: "NIMH: Understanding Stress & Anxiety Disorders",
+        source: "National Institute of Mental Health (NIMH)",
+        url: "https://www.nimh.nih.gov/health/topics/anxiety-disorders",
+        isExternal: true,
+        description: "Official clinical overview of anxiety classifications, diagnostic criteria, and evidence-based interventions."
+      },
+      {
+        title: "Harvard Health: Understanding the Stress Response",
+        source: "Harvard Medical School",
+        url: "https://www.health.harvard.edu/staying-healthy/understanding-the-stress-response",
+        isExternal: true,
+        description: "In-depth scientific breakdown of how the brain triggers adrenaline and cortisol, and how mindfulness dampens the alarm."
+      }
+    ]
   },
   {
     id: "blog-2",
@@ -230,7 +282,7 @@ Implementing just two of these micro-habits can successfully lower your baseline
 Sit down when both of you are calm. Share your 'Worry Map'—what specifically makes you anxious, what your physical cues are (such as a quiet voice or tense shoulders), and what supportive response feels best.
 
 ### The Power of Co-Regulation
-Your nervous systems are wired to affect one another. If one partner is in a high-anxiety state, sitting close, making gentle eye contact, or sharing slow, synchronized breathing can assist in calming both parties.
+Your nervous systems are wired to affect one another. If one partner is in a high-anxiety state, sitting close, making gentle eye contact, or sharing slow, synchronized box breathing can assist in calming both parties.
 
 ### Separate the Person from the Condition
 Ensure you use language that separates your partner from their anxious patterns. Say, "I see the anxiety is very loud today" instead of "You are being overly anxious." This prevents defensiveness and builds a team dynamic.`,
@@ -238,7 +290,47 @@ Ensure you use language that separates your partner from their anxious patterns.
     date: "June 28, 2026",
     readTime: "6 min read",
     tags: ["relationship wellness", "intimacy", "communication", "anxiety support"],
-    image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=400"
+    image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=400",
+    keywords: [
+      {
+        keyword: "Co-Regulation",
+        definition: "The process where two individuals' nervous systems interact to help regulate each other's emotional and physical states.",
+        targetSection: "healthy-intimacy"
+      },
+      {
+        keyword: "Emotional Intimacy",
+        definition: "A deep sense of emotional connection, safety, and mutual understanding shared between partners.",
+        targetSection: "healthy-intimacy"
+      },
+      {
+        keyword: "Vulnerability",
+        definition: "The willingness to express emotional exposure, uncertainty, and risk without defensiveness.",
+        externalUrl: "https://www.adaa.org/"
+      }
+    ],
+    furtherReading: [
+      {
+        title: "Compassionate Partner Communication Workbook (PDF)",
+        source: "Global Hope For All Intimacy Library",
+        url: "#",
+        targetSection: "healthy-intimacy",
+        description: "Structured 'I-statement' templates, conflict de-escalation scripts, and couples connection exercises."
+      },
+      {
+        title: "Book a Couples Wellness Consultation",
+        source: "Global Hope For All Clinical Services",
+        url: "#",
+        targetSection: "appointment-booking",
+        description: "Schedule a confidential session with our relational anxiety specialists to strengthen emotional intimacy."
+      },
+      {
+        title: "ADAA: How Anxiety Affects Relationships & Marriage",
+        source: "Anxiety & Depression Association of America",
+        url: "https://adaa.org/learn-from-us/from-the-experts/for-families/anxiety-and-relationships",
+        isExternal: true,
+        description: "Expert guidance on managing anxiety within romantic partnerships and preventing burnout in support partners."
+      }
+    ]
   },
   {
     id: "blog-3",
@@ -248,21 +340,66 @@ Ensure you use language that separates your partner from their anxious patterns.
     excerpt: "Understanding the physical 'wiring' of a panic attack is one of the most powerful tools for taking its fear away.",
     content: `When you have a panic attack, your mind is convinced you are in imminent physical danger. However, understanding the physiology of what is occurring can help you ride out the wave with less distress.
 
-### The Amygdala Highjack
-Your amygdala is the security alarm of your brain. During panic, it sends a sudden, false signal of danger to the autonomic nervous system. This causes an immediate release of adrenaline.
+### The Amygdala Hijack
+Your amygdala is the security alarm of your brain. During panic, it sends a sudden, false signal of danger to the autonomic nervous system. This causes an immediate release of adrenaline and surge in heart rate.
 
 ### The Physical Sensations Explained
 - **Shortness of breath:** Your lungs are trying to bring in more oxygen to feed your muscles to fight or run.
 - **Chest tightness:** Your chest wall muscles tense up to support this fast, heavy respiration.
 - **Dizziness:** High levels of oxygen from rapid breathing constrict small blood vessels in the head temporarily.
 
-### The Golden Rule of Panic
-A panic attack is simply an emergency drill that your nervous system is running by mistake. It cannot hurt you. Repeating this factual truth during a panic attack helps deactivate the amygdala threat signal.`,
+### The Somatic Reset & Grounding
+A panic attack is simply an emergency drill that your nervous system is running by mistake. Utilizing a 3-minute somatic reset and 5-4-3-2-1 grounding technique rapidly restores cognitive balance.`,
     author: "Sarah Lindqvist, Neuroscientist",
     date: "May 10, 2026",
     readTime: "5 min read",
     tags: ["panic disorder", "education", "biology", "panic attacks"],
-    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400"
+    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
+    keywords: [
+      {
+        keyword: "Amygdala",
+        definition: "The almond-shaped cluster of nuclei in the brain's temporal lobe responsible for processing fear and emotional memory.",
+        externalUrl: "https://www.ncbi.nlm.nih.gov/books/NBK537102/"
+      },
+      {
+        keyword: "Adrenaline",
+        definition: "A hormone secreted by the adrenal glands that accelerates heart rate, boosts energy, and prepares the body for action.",
+        externalUrl: "https://www.nimh.nih.gov/"
+      },
+      {
+        keyword: "Somatic Reset",
+        definition: "Physical body interventions (cold exposure, muscle tension release) designed to immediately stimulate the vagus nerve.",
+        targetSection: "panic-disorder"
+      },
+      {
+        keyword: "5-4-3-2-1 Grounding",
+        definition: "A sensory orientation tool shifting attention to 5 things you see, 4 you touch, 3 you hear, 2 you smell, and 1 you taste.",
+        targetSection: "anxiety-education"
+      }
+    ],
+    furtherReading: [
+      {
+        title: "Panic Attack Rescue Protocol (Emergency PDF Guide)",
+        source: "Global Hope For All Rescue Library",
+        url: "#",
+        targetSection: "panic-disorder",
+        description: "An emergency pocket-sized checklist of physical reset steps, reassurance scripts, and breathing timers."
+      },
+      {
+        title: "GABA & L-Theanine Calming Neuro-Nutrients",
+        source: "Global Hope For All WooCommerce Shop",
+        url: "#",
+        targetSection: "shop",
+        description: "Fast-acting sublingual or capsule neuro-nutrient formulas for immediate neurological relaxation support."
+      },
+      {
+        title: "PubMed: Vagus Nerve Stimulation & Panic Disorder Physiology",
+        source: "National Center for Biotechnology Information (NCBI)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/",
+        isExternal: true,
+        description: "Peer-reviewed research paper detailing autonomic nerve regulation and somatic grounding mechanisms."
+      }
+    ]
   },
   {
     id: "blog-4",
@@ -270,13 +407,13 @@ A panic attack is simply an emergency drill that your nervous system is running 
     slug: "practical-mindfulness-overcoming-worry",
     category: "Mindfulness",
     excerpt: "Stuck in a repetitive circle of worrisome thoughts? These three mindfulness exercises are designed to break the loop.",
-    content: `We've all been there: a single worrisome thought starts a chain reaction that keeps you awake at night or distracted during the day. This is a cognitive 'worry loop'.
+    content: `We've all been there: a single worrisome thought starts a chain reaction that keeps you awake at night or distracted during the day. This is a cognitive 'worry loop' fueled by catastrophic thinking.
 
-### 1. Labeling Your Thoughts
-Instead of getting caught in the story of the worry, simply label it. Say to yourself, "I am having the thought that I might fail." This creates a small but critical distance between you and the thought.
+### 1. Labeling Your Thoughts & CBT Journaling
+Instead of getting caught in the story of the worry, simply label it. Say to yourself, "I am having the thought that I might fail." Logging this in a structured CBT Journal creates a critical distance between you and the thought.
 
-### 2. The Anchor Touch
-Find a physical object you carry (a ring, a key, or a smooth pebble). When your mind wanders, touch this object and focus completely on its texture, weight, and temperature for 10 seconds.
+### 2. The Anchor Touch & Grounding
+Find a physical object you carry (a ring, a key, or a smooth pebble). When your mind wanders into anxious forecasting, touch this object and focus completely on its texture, weight, and temperature for 10 seconds.
 
 ### 3. Thought Streaming
 Imagine your thoughts are leaves floating down a gentle stream. Place each worrisome thought on a leaf and watch it float out of view. You don't have to stop the thoughts—you just have to let them pass.`,
@@ -284,7 +421,47 @@ Imagine your thoughts are leaves floating down a gentle stream. Place each worri
     date: "April 18, 2026",
     readTime: "5 min read",
     tags: ["mindfulness", "worry loop", "cognitive tools"],
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400"
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&q=80&w=400",
+    keywords: [
+      {
+        keyword: "Catastrophic Thinking",
+        definition: "A cognitive distortion where an individual automatically assumes the worst possible scenario will occur.",
+        targetSection: "anxiety-education"
+      },
+      {
+        keyword: "CBT Journaling",
+        definition: "Cognitive Behavioral Therapy practice of writing down thoughts, identifying irrational beliefs, and reframing them with evidence.",
+        targetSection: "shop"
+      },
+      {
+        keyword: "Mindfulness",
+        definition: "The psychological state of active, open attention on the present moment without judgment.",
+        externalUrl: "https://www.adaa.org/"
+      }
+    ],
+    furtherReading: [
+      {
+        title: "CBT Mindfulness Worksheets & Grounding Audio",
+        source: "Global Hope For All Patient Library",
+        url: "#",
+        targetSection: "patient-portal",
+        description: "Interactive cognitive restructuring worksheets and guided audio grounding tracks."
+      },
+      {
+        title: "Guided CBT Mindfulness Journal (Hardcover)",
+        source: "Global Hope For All WooCommerce Shop",
+        url: "#",
+        targetSection: "shop",
+        description: "12-week structured journal with daily thought records, habit trackers, and grounding prompts."
+      },
+      {
+        title: "WHO: Doing What Matters in Times of Stress",
+        source: "World Health Organization (WHO)",
+        url: "https://www.who.int/publications/i/item/9789240003927",
+        isExternal: true,
+        description: "An illustrated stress management guide for coping with adversity using evidence-based mindfulness principles."
+      }
+    ]
   }
 ];
 

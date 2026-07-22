@@ -18,6 +18,7 @@ import GoogleMapPlaceholder from "./components/GoogleMapPlaceholder";
 import Shop from "./components/Shop";
 import WhatsAppWidget from "./components/WhatsAppWidget";
 import ReviewsAndTestimonials from "./components/ReviewsAndTestimonials";
+import BlogSection from "./components/BlogSection";
 
 
 // Data
@@ -985,158 +986,9 @@ export default function App() {
               </div>
             )}
 
-            {/* VIEW 6: WELLNESS BLOG */}
+            {/* VIEW 6: WELLNESS BLOG WITH HIGHLIGHTED KEYWORDS & FURTHER READING */}
             {activeSection === "wellness-blog" && (
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-12">
-                
-                <div className="text-center max-w-2xl mx-auto space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-extrabold text-slate-950 font-sans tracking-tight">Mental Wellness Blog</h2>
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    SEO-friendly educational insights written by verified counseling and wellness specialists regarding anxiety, relationships, and mindfulness.
-                  </p>
-                </div>
-
-                {/* Category filters */}
-                <div className="flex flex-wrap gap-2 justify-center py-2">
-                  {["All", "Anxiety Education", "Panic Disorder", "Stress Management", "Mindfulness", "Healthy Relationships", "Emotional Wellness", "Self-Care", "Sleep & Wellness"].map((cat) => (
-                    <button
-                      id={`blog-filter-${cat.replace(/\s+/g, '-').toLowerCase()}`}
-                      key={cat}
-                      onClick={() => {
-                        setSelectedBlogCategory(cat);
-                        setActiveBlogPost(null);
-                      }}
-                      className={`px-4 py-2 rounded-full text-xs font-bold transition duration-150 cursor-pointer ${
-                        selectedBlogCategory === cat 
-                          ? "bg-teal-700 text-white" 
-                          : "bg-white border border-slate-200 text-slate-600 hover:bg-slate-50"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Active blog post reader or post list */}
-                <AnimatePresence mode="wait">
-                  {activeBlogPost ? (
-                    <motion.article 
-                      id="blog-post-article-reader"
-                      initial={{ opacity: 0, scale: 0.98 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.98 }}
-                      className="bg-white rounded-3xl border border-slate-100 p-6 md:p-10 max-w-3xl mx-auto shadow-sm space-y-6 text-left"
-                    >
-                      <button
-                        id="blog-post-back-btn"
-                        onClick={() => setActiveBlogPost(null)}
-                        className="text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1.5"
-                      >
-                        ← Back to post list
-                      </button>
-
-                      <div className="space-y-3.5 border-b border-slate-100 pb-5">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 border border-teal-100 px-2.5 py-1 rounded-full">
-                          {activeBlogPost.category}
-                        </span>
-                        <h3 className="text-2xl md:text-3xl font-extrabold text-slate-950 font-sans leading-tight pt-1">
-                          {activeBlogPost.title}
-                        </h3>
-                        <div className="flex items-center gap-4 text-xs text-slate-400">
-                          <span>By <strong>{activeBlogPost.author}</strong></span>
-                          <span>•</span>
-                          <span>{activeBlogPost.date}</span>
-                          <span>•</span>
-                          <span>{activeBlogPost.readTime}</span>
-                        </div>
-                      </div>
-
-                      {/* Display image inside reader */}
-                      <div className="h-64 md:h-80 bg-slate-100 rounded-2xl overflow-hidden">
-                        <img 
-                          src={activeBlogPost.image} 
-                          alt={activeBlogPost.title} 
-                          referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover" 
-                        />
-                      </div>
-
-                      {/* Blog post markdown-style content */}
-                      <div className="text-slate-600 text-sm leading-relaxed whitespace-pre-line space-y-4">
-                        {activeBlogPost.content}
-                      </div>
-
-                      <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div>
-                          <h4 className="font-bold text-slate-800 text-xs">Need specific guidelines?</h4>
-                          <p className="text-slate-500 text-[11px] leading-normal mt-0.5">Explore additional resources on {activeBlogPost.category} inside our secure patient area.</p>
-                        </div>
-                        <button
-                          id="blog-reader-cta"
-                          onClick={() => setActiveSection("patient-portal")}
-                          className="bg-teal-700 hover:bg-teal-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-sm"
-                        >
-                          Access Patient Portal
-                        </button>
-                      </div>
-                    </motion.article>
-                  ) : (
-                    <motion.div 
-                      id="blog-post-grid"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"
-                    >
-                      {filteredBlogPosts.length === 0 ? (
-                        <div className="col-span-full text-center py-12 text-slate-500">
-                          <Newspaper className="w-10 h-10 mx-auto text-slate-300 mb-2" />
-                          <p className="text-sm font-semibold">No articles found in this category currently.</p>
-                        </div>
-                      ) : (
-                        filteredBlogPosts.map((post) => (
-                          <div 
-                            key={post.id} 
-                            className="bg-white border border-slate-100 rounded-3xl overflow-hidden hover:shadow-lg transition flex flex-col text-left justify-between"
-                          >
-                            <div className="h-48 bg-slate-100">
-                              <img 
-                                src={post.image} 
-                                alt={post.title} 
-                                referrerPolicy="no-referrer"
-                                className="w-full h-full object-cover" 
-                              />
-                            </div>
-                            <div className="p-6 space-y-3.5 flex-grow">
-                              <span className="text-[9px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-full">
-                                {post.category}
-                              </span>
-                              <h3 className="font-extrabold text-base md:text-lg text-slate-950 font-sans leading-snug line-clamp-2">
-                                {post.title}
-                              </h3>
-                              <p className="text-slate-500 text-xs leading-normal line-clamp-3">
-                                {post.excerpt}
-                              </p>
-                            </div>
-                            <div className="p-6 pt-0 border-t border-slate-50/50 flex items-center justify-between text-xs">
-                              <span className="text-slate-400 font-medium">{post.readTime}</span>
-                              <button
-                                id={`read-post-${post.id}`}
-                                onClick={() => setActiveBlogPost(post)}
-                                className="text-teal-700 hover:text-teal-900 font-bold flex items-center gap-1 cursor-pointer"
-                              >
-                                Read Article
-                                <ArrowRight className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          </div>
-                        ))
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-              </div>
+              <BlogSection onNavigateSection={(sec) => setActiveSection(sec)} />
             )}
 
             {/* VIEW 7: PATIENT REGISTRATION PORTAL */}
