@@ -202,11 +202,63 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
     return (
       <div id="portal-login-card" className="glass-panel-heavy rounded-[40px] shadow-2xl overflow-hidden max-w-md mx-auto my-6 text-left">
         
-        <div className="bg-gradient-to-r from-blue-950/85 via-blue-900/85 to-teal-800/85 text-white p-6 text-center border-b border-white/20">
-          <LayoutDashboard className="w-10 h-10 mx-auto mb-3 text-teal-300" />
-          <h3 className="text-xl font-bold font-sans">Patient Information Portal</h3>
-          <p className="text-teal-100 text-xs mt-1.5 font-light">
-            Log in to manage appointments, access downloadable guides, and receive wellness tips.
+        {/* Mode Selector Header Tabs */}
+        <div className="grid grid-cols-2 bg-slate-950/40 p-1.5 border-b border-white/20">
+          <button
+            type="button"
+            id="login-tab-patient"
+            onClick={() => {
+              setLoginMode("patient");
+              setErrorMsg("");
+              setUsername("demo");
+              setPassword("password");
+            }}
+            className={`py-2.5 px-3 rounded-2xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+              loginMode === "patient"
+                ? "bg-teal-600 text-white shadow-md"
+                : "text-slate-300 hover:text-white hover:bg-white/10"
+            }`}
+          >
+            <User className="w-3.5 h-3.5" />
+            <span>Patient Portal</span>
+          </button>
+          <button
+            type="button"
+            id="login-tab-admin"
+            onClick={() => {
+              setLoginMode("admin");
+              setErrorMsg("");
+              setUsername("admin237");
+              setPassword("admin112233@");
+            }}
+            className={`py-2.5 px-3 rounded-2xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+              loginMode === "admin"
+                ? "bg-amber-600 text-white shadow-md"
+                : "text-slate-300 hover:text-white hover:bg-white/10"
+            }`}
+          >
+            <Lock className="w-3.5 h-3.5" />
+            <span>Admin Back-End</span>
+          </button>
+        </div>
+
+        <div className={`p-6 text-center border-b border-white/20 text-white transition-colors duration-200 ${
+          loginMode === "admin"
+            ? "bg-gradient-to-r from-slate-950 via-slate-900 to-amber-950"
+            : "bg-gradient-to-r from-blue-950/85 via-blue-900/85 to-teal-800/85"
+        }`}>
+          {loginMode === "admin" ? (
+            <Lock className="w-10 h-10 mx-auto mb-3 text-amber-400" />
+          ) : (
+            <LayoutDashboard className="w-10 h-10 mx-auto mb-3 text-teal-300" />
+          )}
+          <h3 className="text-xl font-bold font-sans">
+            {loginMode === "admin" ? "Admin Website Back-End Portal" : "Patient Information Portal"}
+          </h3>
+          <p className="text-slate-200 text-xs mt-1.5 font-light">
+            {loginMode === "admin"
+              ? "Sign in with admin login details to open the website back-end control center."
+              : "Sign in with patient credentials to manage appointments, access downloadable guides, and receive support."}
           </p>
         </div>
 
@@ -220,7 +272,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
 
           <div>
             <label className="block text-slate-700 text-xs font-semibold mb-1.5" htmlFor="portal-username">
-              Username
+              {loginMode === "admin" ? "Admin Username / Email" : "Username"}
             </label>
             <div className="relative">
               <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-slate-400" />
@@ -228,7 +280,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
                 id="portal-username"
                 type="text"
                 required
-                placeholder="demo"
+                placeholder={loginMode === "admin" ? "admin237" : "demo"}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full bg-white/40 focus:bg-white/70 border border-white/60 focus:border-teal-500 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition duration-150 text-slate-800 placeholder-slate-400 backdrop-blur-xs"
@@ -246,7 +298,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
                 id="portal-password"
                 type="password"
                 required
-                placeholder="password"
+                placeholder={loginMode === "admin" ? "admin112233@" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-white/40 focus:bg-white/70 border border-white/60 focus:border-teal-500 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition duration-150 text-slate-800 placeholder-slate-400 backdrop-blur-xs"
@@ -257,20 +309,72 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
           <button
             id="login-submit-btn"
             type="submit"
-            className="w-full text-white bg-teal-600 hover:bg-teal-700 font-bold py-3 rounded-xl transition duration-150 shadow-lg shadow-teal-600/15 text-sm cursor-pointer"
+            className={`w-full text-white font-bold py-3.5 rounded-xl transition duration-150 shadow-lg text-sm cursor-pointer flex items-center justify-center gap-2 ${
+              loginMode === "admin"
+                ? "bg-amber-600 hover:bg-amber-700 shadow-amber-600/20"
+                : "bg-teal-600 hover:bg-teal-700 shadow-teal-600/15"
+            }`}
           >
-            Access Patient Portal
+            <Lock className="w-4 h-4" />
+            <span>{loginMode === "admin" ? "Login to Back-End Portal" : "Access Patient Portal"}</span>
           </button>
 
-          <div className="bg-white/30 backdrop-blur-md border border-white/50 rounded-2xl p-4 text-[11px] text-slate-600">
-            <div className="font-semibold text-slate-700 mb-1 flex items-center gap-1">
-              <Info className="w-3.5 h-3.5 text-teal-700" />
-              <span>Developer Test Access:</span>
+          {/* Quick Demo Credentials Box */}
+          <div className="bg-white/40 backdrop-blur-md border border-white/60 rounded-2xl p-3.5 text-[11px] text-slate-700 space-y-2">
+            <div className="font-bold text-slate-800 flex items-center justify-between">
+              <span className="flex items-center gap-1">
+                <Info className="w-3.5 h-3.5 text-teal-700" /> Quick Access Login Details:
+              </span>
             </div>
-            <p>Username: <strong className="text-teal-900">demo</strong></p>
-            <p>Password: <strong className="text-teal-900">password</strong></p>
-            <p className="mt-1.5 border-t border-white/30 pt-1.5 text-slate-500">
-              Or navigate to <span className="font-semibold cursor-pointer underline text-teal-700 hover:text-teal-900" onClick={() => activeSectionSetter?.("patient-registration")}>Patient Registration</span> page to make custom credentials.
+
+            <div className="grid grid-cols-2 gap-2 text-[10.5px]">
+              {/* Patient Demo Details */}
+              <div 
+                onClick={() => {
+                  setLoginMode("patient");
+                  setUsername("demo");
+                  setPassword("password");
+                  setErrorMsg("");
+                }}
+                className={`p-2 rounded-xl border cursor-pointer transition ${
+                  loginMode === "patient" 
+                    ? "bg-teal-50/90 border-teal-300 ring-2 ring-teal-500/30" 
+                    : "bg-white/60 border-white/80 hover:bg-white/80"
+                }`}
+              >
+                <div className="flex items-center justify-between font-bold text-slate-800 mb-0.5">
+                  <span>👤 Patient Login</span>
+                  <span className="text-[9px] text-teal-700 underline font-bold">Use</span>
+                </div>
+                <p>User: <strong className="font-mono text-teal-900">demo</strong></p>
+                <p>Pass: <strong className="font-mono text-teal-900">password</strong></p>
+              </div>
+
+              {/* Admin Login Details */}
+              <div 
+                onClick={() => {
+                  setLoginMode("admin");
+                  setUsername("admin237");
+                  setPassword("admin112233@");
+                  setErrorMsg("");
+                }}
+                className={`p-2 rounded-xl border cursor-pointer transition ${
+                  loginMode === "admin" 
+                    ? "bg-amber-100/90 border-amber-300 ring-2 ring-amber-500/30" 
+                    : "bg-amber-50/70 border-amber-200 hover:bg-amber-100/70"
+                }`}
+              >
+                <div className="flex items-center justify-between font-bold text-amber-950 mb-0.5">
+                  <span>🔐 Admin Login</span>
+                  <span className="text-[9px] text-amber-800 underline font-bold">Use</span>
+                </div>
+                <p>User: <strong className="font-mono text-amber-900">admin237</strong></p>
+                <p>Pass: <strong className="font-mono text-amber-900 font-bold">admin112233@</strong></p>
+              </div>
+            </div>
+
+            <p className="text-[10px] text-slate-500 pt-1 border-t border-white/40">
+              Need a patient account? Register at <span className="font-semibold cursor-pointer underline text-teal-700 hover:text-teal-900" onClick={() => activeSectionSetter?.("patient-registration")}>Patient Registration</span>.
             </p>
           </div>
         </form>
