@@ -258,8 +258,7 @@ export default function App() {
                 { id: "appointment-booking", label: "Book Consultation" },
                 { id: "patient-portal", label: "Patient Portal" },
                 { id: "faq", label: "FAQ" },
-                { id: "contact", label: "Contact" },
-                { id: "admin-panel", label: "🔐 Admin" }
+                { id: "contact", label: "Contact" }
               ].map((item) => (
                 <button
                   id={`nav-link-${item.id}`}
@@ -355,8 +354,7 @@ export default function App() {
                   { id: "appointment-booking", label: "Appointment Booking" },
                   { id: "patient-portal", label: "Patient Information Portal" },
                   { id: "faq", label: "FAQ" },
-                  { id: "contact", label: "Contact Us" },
-                  { id: "admin-panel", label: "🔐 Admin Back-End Control Panel" }
+                  { id: "contact", label: "Contact Us" }
                 ].map((item) => (
 
                   <button
@@ -1380,7 +1378,6 @@ export default function App() {
               <li><button onClick={() => setActiveSection("patient-registration")} className="hover:text-white transition cursor-pointer">Patient Registration</button></li>
               <li><button onClick={() => setActiveSection("appointment-booking")} className="hover:text-white transition cursor-pointer">Appointment Booking</button></li>
               <li><button onClick={() => setActiveSection("patient-portal")} className="hover:text-white transition cursor-pointer">Patient Information Portal</button></li>
-              <li><button onClick={() => setActiveSection("admin-panel")} className="hover:text-white transition cursor-pointer text-amber-300 font-bold">🔐 Admin Back-End Login</button></li>
               <li><button onClick={() => setActiveSection("faq")} className="hover:text-white transition cursor-pointer">FAQ</button></li>
               <li><button onClick={() => setActiveSection("contact")} className="hover:text-white transition cursor-pointer">Contact Us</button></li>
             </ul>

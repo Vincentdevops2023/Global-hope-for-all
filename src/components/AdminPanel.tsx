@@ -16,11 +16,20 @@ interface AdminPanelProps {
 
 export default function AdminPanel({ onNavigateSection, appointmentsList = [], setAppointmentsList }: AdminPanelProps) {
   // Authentication State
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("admin@globalhope.org");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return localStorage.getItem("global_hope_admin_logged_in") === "true";
+  });
+  const [email, setEmail] = useState<string>("admin237");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<string>("");
   const [activeTab, setActiveTab] = useState<"overview" | "blog" | "reviews" | "products" | "appointments" | "settings">("overview");
+
+  // Sync login status on mount
+  React.useEffect(() => {
+    if (localStorage.getItem("global_hope_admin_logged_in") === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   // Content Management States
   const [articles, setArticles] = useState<BlogPost[]>(BLOG_POSTS);
@@ -39,23 +48,27 @@ export default function AdminPanel({ onNavigateSection, appointmentsList = [], s
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
-      setLoginError("Please enter both email and password.");
+      setLoginError("Please enter both username/email and password.");
       return;
     }
-    // Demo admin check
-    if (password === "admin2026" || password === "admin" || password === "123456") {
+
+    const norm = email.trim().toLowerCase();
+    
+    // Updated Admin credentials check: admin237 / admin112233@
+    if ((norm === "admin237" || norm === "admin237@globalhope.org" || norm === "admin") && password === "admin112233@") {
       setIsLoggedIn(true);
+      localStorage.setItem("global_hope_admin_logged_in", "true");
       setLoginError("");
-      showToast("Successfully logged into Admin Back-End Dashboard.");
+      showToast("Successfully logged into Admin Control Center.");
     } else {
-      setLoginError("Invalid admin credentials. Use demo password: admin2026");
+      setLoginError("Invalid admin username or password.");
     }
   };
 
   // Demo auto-fill
   const fillDemoCredentials = () => {
-    setEmail("admin@globalhope.org");
-    setPassword("admin2026");
+    setEmail("admin237");
+    setPassword("admin112233@");
     setLoginError("");
   };
 
@@ -194,24 +207,6 @@ export default function AdminPanel({ onNavigateSection, appointmentsList = [], s
             </p>
           </div>
 
-          {/* Demo Info Box */}
-          <div className="bg-teal-50 border border-teal-200 rounded-2xl p-4 text-xs text-teal-900 space-y-2">
-            <div className="flex items-center justify-between font-bold">
-              <span className="flex items-center gap-1.5"><Key className="w-3.5 h-3.5 text-teal-700" /> Demo Admin Access</span>
-              <button
-                type="button"
-                onClick={fillDemoCredentials}
-                className="text-[11px] bg-teal-700 text-white px-2.5 py-1 rounded-lg font-bold hover:bg-teal-800 transition cursor-pointer"
-              >
-                Auto-Fill
-              </button>
-            </div>
-            <p className="font-mono text-[11px] text-teal-800">
-              Email: <strong>admin@globalhope.org</strong><br/>
-              Password: <strong>admin2026</strong>
-            </p>
-          </div>
-
           {/* Login Form */}
           <form onSubmit={handleLogin} className="space-y-4">
             {loginError && (
@@ -223,16 +218,17 @@ export default function AdminPanel({ onNavigateSection, appointmentsList = [], s
 
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">
-                Admin Email Address
+                Admin Username or Email
               </label>
               <div className="relative">
                 <User className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
-                  type="email"
+                  type="text"
                   required
+                  placeholder="Enter admin username"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-teal-600"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600"
                 />
               </div>
             </div>
@@ -248,8 +244,8 @@ export default function AdminPanel({ onNavigateSection, appointmentsList = [], s
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-teal-600"
+                  placeholder="••••••••••••"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-600"
                 />
               </div>
             </div>
@@ -258,7 +254,7 @@ export default function AdminPanel({ onNavigateSection, appointmentsList = [], s
               type="submit"
               className="w-full bg-slate-950 hover:bg-slate-800 text-white font-extrabold py-3.5 rounded-2xl text-xs uppercase tracking-wider shadow-lg shadow-slate-950/20 transition cursor-pointer flex items-center justify-center gap-2"
             >
-              <Lock className="w-4 h-4" />
+              <Lock className="w-4 h-4 text-amber-400" />
               <span>Authenticate & Enter Admin Panel</span>
             </button>
           </form>
@@ -312,9 +308,20 @@ export default function AdminPanel({ onNavigateSection, appointmentsList = [], s
             </button>
           )}
 
+          {onNavigateSection && (
+            <button
+              onClick={() => onNavigateSection("patient-portal")}
+              className="bg-teal-600/80 hover:bg-teal-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer border border-teal-500/30"
+            >
+              <Users className="w-3.5 h-3.5 text-teal-200" />
+              <span>Patient Portal</span>
+            </button>
+          )}
+
           <button
             onClick={() => {
               setIsLoggedIn(false);
+              localStorage.removeItem("global_hope_admin_logged_in");
               showToast("Logged out of admin panel.");
             }}
             className="bg-rose-600/80 hover:bg-rose-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer"

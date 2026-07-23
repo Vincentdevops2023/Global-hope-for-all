@@ -5,6 +5,7 @@ import { INFO_SHEETS } from "../data";
 
 export default function Portal({ activeSectionSetter }: { activeSectionSetter?: (sec: string) => void }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginMode, setLoginMode] = useState<"patient" | "admin">("patient");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -110,14 +111,23 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
 
     const normalizedUser = username.trim().toLowerCase();
 
-    // 1. Check Demo Account
+    // 1. Check Admin Credentials (admin237 / admin112233@)
+    if ((normalizedUser === "admin237" || normalizedUser === "admin237@globalhope.org" || normalizedUser === "admin") && password === "admin112233@") {
+      localStorage.setItem("global_hope_admin_logged_in", "true");
+      if (activeSectionSetter) {
+        activeSectionSetter("admin-panel");
+      }
+      return;
+    }
+
+    // 2. Check Patient Demo Account
     if (normalizedUser === "demo" && password === "password") {
       localStorage.setItem("global_hope_current_user", "demo");
       loadSession("demo");
       return;
     }
 
-    // 2. Check registered accounts
+    // 3. Check registered patient accounts
     const stored = localStorage.getItem("global_hope_patients");
     const users = stored ? JSON.parse(stored) : {};
     
@@ -125,7 +135,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
       localStorage.setItem("global_hope_current_user", normalizedUser);
       loadSession(normalizedUser);
     } else {
-      setErrorMsg("Invalid username or password. Use 'demo' / 'password' to test.");
+      setErrorMsg("Invalid username or password.");
     }
   };
 
@@ -190,7 +200,8 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
   // Login Screen
   if (!isLoggedIn) {
     return (
-      <div id="portal-login-card" className="glass-panel-heavy rounded-[40px] shadow-2xl overflow-hidden max-w-md mx-auto my-6">
+      <div id="portal-login-card" className="glass-panel-heavy rounded-[40px] shadow-2xl overflow-hidden max-w-md mx-auto my-6 text-left">
+        
         <div className="bg-gradient-to-r from-blue-950/85 via-blue-900/85 to-teal-800/85 text-white p-6 text-center border-b border-white/20">
           <LayoutDashboard className="w-10 h-10 mx-auto mb-3 text-teal-300" />
           <h3 className="text-xl font-bold font-sans">Patient Information Portal</h3>
@@ -201,7 +212,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
 
         <form onSubmit={handleLogin} className="p-6 md:p-8 space-y-4">
           {errorMsg && (
-            <div className="bg-red-50/80 backdrop-blur-sm text-red-800 text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 border border-red-200">
+            <div className="bg-red-50/90 backdrop-blur-sm text-red-800 text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 border border-red-200">
               <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
               <span>{errorMsg}</span>
             </div>
@@ -248,7 +259,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
             type="submit"
             className="w-full text-white bg-teal-600 hover:bg-teal-700 font-bold py-3 rounded-xl transition duration-150 shadow-lg shadow-teal-600/15 text-sm cursor-pointer"
           >
-            Access Portal
+            Access Patient Portal
           </button>
 
           <div className="bg-white/30 backdrop-blur-md border border-white/50 rounded-2xl p-4 text-[11px] text-slate-600">
@@ -258,8 +269,8 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
             </div>
             <p>Username: <strong className="text-teal-900">demo</strong></p>
             <p>Password: <strong className="text-teal-900">password</strong></p>
-            <p className="mt-1 border-t border-white/30 pt-1.5 text-slate-500">
-              Or navigate to the <span className="font-semibold cursor-pointer underline text-teal-700 hover:text-teal-900" onClick={() => activeSectionSetter?.("patient-registration")}>Patient Registration</span> page to make your own custom credentials.
+            <p className="mt-1.5 border-t border-white/30 pt-1.5 text-slate-500">
+              Or navigate to <span className="font-semibold cursor-pointer underline text-teal-700 hover:text-teal-900" onClick={() => activeSectionSetter?.("patient-registration")}>Patient Registration</span> page to make custom credentials.
             </p>
           </div>
         </form>
@@ -328,10 +339,11 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
           </div>
         </div>
 
-        <div className="pt-6 border-t border-white/10 mt-6 md:mt-0">
-          <div className="text-xs text-slate-400 mb-3">
+        <div className="pt-6 border-t border-white/10 mt-6 md:mt-0 space-y-2.5">
+          <div className="text-xs text-slate-400">
             Logged in as: <strong className="text-white block truncate">{userProfile?.firstName} {userProfile?.lastName}</strong>
           </div>
+
           <button
             id="portal-logout-btn"
             onClick={handleLogout}
