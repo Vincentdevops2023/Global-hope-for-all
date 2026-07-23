@@ -228,8 +228,8 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
             onClick={() => {
               setLoginMode("admin");
               setErrorMsg("");
-              setUsername("admin237");
-              setPassword("admin112233@");
+              setUsername("");
+              setPassword("");
             }}
             className={`py-2.5 px-3 rounded-2xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
               loginMode === "admin"
@@ -280,7 +280,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
                 id="portal-username"
                 type="text"
                 required
-                placeholder={loginMode === "admin" ? "admin237" : "demo"}
+                placeholder={loginMode === "admin" ? "Enter username or email" : "demo"}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full bg-white/40 focus:bg-white/70 border border-white/60 focus:border-teal-500 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition duration-150 text-slate-800 placeholder-slate-400 backdrop-blur-xs"
@@ -298,7 +298,7 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
                 id="portal-password"
                 type="password"
                 required
-                placeholder={loginMode === "admin" ? "admin112233@" : "password"}
+                placeholder={loginMode === "admin" ? "••••••••••••" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-white/40 focus:bg-white/70 border border-white/60 focus:border-teal-500 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none transition duration-150 text-slate-800 placeholder-slate-400 backdrop-blur-xs"
@@ -319,62 +319,16 @@ export default function Portal({ activeSectionSetter }: { activeSectionSetter?: 
             <span>{loginMode === "admin" ? "Login to Back-End Portal" : "Access Patient Portal"}</span>
           </button>
 
-          {/* Quick Demo Credentials Box */}
-          <div className="bg-white/40 backdrop-blur-md border border-white/60 rounded-2xl p-3.5 text-[11px] text-slate-700 space-y-2">
-            <div className="font-bold text-slate-800 flex items-center justify-between">
-              <span className="flex items-center gap-1">
-                <Info className="w-3.5 h-3.5 text-teal-700" /> Quick Access Login Details:
-              </span>
+          {/* Quick Demo Credentials Box (Patient Only) */}
+          <div className="bg-white/30 backdrop-blur-md border border-white/50 rounded-2xl p-4 text-[11px] text-slate-600">
+            <div className="font-semibold text-slate-700 mb-1 flex items-center gap-1">
+              <Info className="w-3.5 h-3.5 text-teal-700" />
+              <span>Patient Test Access:</span>
             </div>
-
-            <div className="grid grid-cols-2 gap-2 text-[10.5px]">
-              {/* Patient Demo Details */}
-              <div 
-                onClick={() => {
-                  setLoginMode("patient");
-                  setUsername("demo");
-                  setPassword("password");
-                  setErrorMsg("");
-                }}
-                className={`p-2 rounded-xl border cursor-pointer transition ${
-                  loginMode === "patient" 
-                    ? "bg-teal-50/90 border-teal-300 ring-2 ring-teal-500/30" 
-                    : "bg-white/60 border-white/80 hover:bg-white/80"
-                }`}
-              >
-                <div className="flex items-center justify-between font-bold text-slate-800 mb-0.5">
-                  <span>👤 Patient Login</span>
-                  <span className="text-[9px] text-teal-700 underline font-bold">Use</span>
-                </div>
-                <p>User: <strong className="font-mono text-teal-900">demo</strong></p>
-                <p>Pass: <strong className="font-mono text-teal-900">password</strong></p>
-              </div>
-
-              {/* Admin Login Details */}
-              <div 
-                onClick={() => {
-                  setLoginMode("admin");
-                  setUsername("admin237");
-                  setPassword("admin112233@");
-                  setErrorMsg("");
-                }}
-                className={`p-2 rounded-xl border cursor-pointer transition ${
-                  loginMode === "admin" 
-                    ? "bg-amber-100/90 border-amber-300 ring-2 ring-amber-500/30" 
-                    : "bg-amber-50/70 border-amber-200 hover:bg-amber-100/70"
-                }`}
-              >
-                <div className="flex items-center justify-between font-bold text-amber-950 mb-0.5">
-                  <span>🔐 Admin Login</span>
-                  <span className="text-[9px] text-amber-800 underline font-bold">Use</span>
-                </div>
-                <p>User: <strong className="font-mono text-amber-900">admin237</strong></p>
-                <p>Pass: <strong className="font-mono text-amber-900 font-bold">admin112233@</strong></p>
-              </div>
-            </div>
-
-            <p className="text-[10px] text-slate-500 pt-1 border-t border-white/40">
-              Need a patient account? Register at <span className="font-semibold cursor-pointer underline text-teal-700 hover:text-teal-900" onClick={() => activeSectionSetter?.("patient-registration")}>Patient Registration</span>.
+            <p>Username: <strong className="text-teal-900 font-mono">demo</strong></p>
+            <p>Password: <strong className="text-teal-900 font-mono">password</strong></p>
+            <p className="mt-1.5 border-t border-white/30 pt-1.5 text-slate-500">
+              Or navigate to <span className="font-semibold cursor-pointer underline text-teal-700 hover:text-teal-900" onClick={() => activeSectionSetter?.("patient-registration")}>Patient Registration</span> to create a custom account.
             </p>
           </div>
         </form>

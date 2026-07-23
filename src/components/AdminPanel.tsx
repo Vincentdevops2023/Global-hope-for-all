@@ -19,7 +19,7 @@ export default function AdminPanel({ onNavigateSection, appointmentsList = [], s
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
     return localStorage.getItem("global_hope_admin_logged_in") === "true";
   });
-  const [email, setEmail] = useState<string>("admin237");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<string>("");
   const [activeTab, setActiveTab] = useState<"overview" | "blog" | "reviews" | "products" | "appointments" | "settings">("overview");
